@@ -17,7 +17,7 @@
 
     module.exports.loginToDatabase = function () {
         return new Promise(function (fullfill, reject) {
-            MongoClient.connect("mongodb://localhost:27017/DiscordBot", function (err, database) {
+            MongoClient.connect("mongodb://db:27017/DiscordBot", function (err, database) {
                 if (err) {
                     reject(err);
                 } else {
