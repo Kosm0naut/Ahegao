@@ -134,7 +134,13 @@
                         break;
                     case "!setMessage":
                         /*global botSetGame*/
-                        botSetGame("with Seiko", mybot);
+                        basicCommands.botSetGame(message.content, mybot.user)
+                            .then(function (game) {
+                                message.channel.sendMessage("Game set to: " + game);
+                            }, function(err) {
+                                message.channel.sendMessage("Couldn't set the game.");
+                                console.log(err);
+                            });
                         break;
                     case "!addtrack":
                         serverManagement.findServer(message.channel.id, db, function (server) {

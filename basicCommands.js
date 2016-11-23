@@ -39,9 +39,11 @@
     };
 
     module.exports.botSetGame = function (game, bot) {
+        var index = game.indexOf(" "),  // Gets the first index where a space occours
+            text = game.substr(index + 1);  // Gets the text part
         return new Promise(function (fullfill, reject) {
-            bot.setGame(game)
-                .then(fullfill)
+            bot.setGame(text)
+                .then(fullfill(text))
                 .catch(function (e) {
                     reject(e);
                 });
