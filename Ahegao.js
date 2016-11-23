@@ -4,7 +4,6 @@
 var Discord = require("discord.js"),
     mybot = new Discord.Client(),
     CronJob = require('cron').CronJob,
-    botConnection = require('./connections.js'),
     basicCommands = require('./basicCommands.js'),
     messageHandler = require('./messageHandler.js'),
     connections = require('./connections.js'),
@@ -13,6 +12,7 @@ var Discord = require("discord.js"),
     dotenv = require('dotenv').config(),
     db,
     interval,
+    started = false,
     osuapi = require('osu-api'),
     osu = new osuapi.Api(process.env.osuApi, osuapi.Modes.osu),
     avgRequests = {
@@ -56,7 +56,7 @@ function main() {
     connections.loginToDatabase()
         .then(function (database) {
             db = database;
-            botConnection.loginWithToken(mybot);
+            connections.loginWithToken(mybot);
         }, function (err) {
             console.log(err);
         })
@@ -66,7 +66,9 @@ function main() {
     botStart();
 
     mybot.on('ready', function () {
+      if(!started) {
         console.log('I am ready!');
+        started = true;
         basicCommands.botSetGame("Renyan WanWan", mybot.user)
             .then(function () {
                 messageHandler.onMessage(mybot, db);
@@ -76,7 +78,8 @@ function main() {
             .catch(function (e) {
                 console.log(e);
             });
-    });
+    }
+  });
 }
 
 main();
