@@ -1,0 +1,5 @@
+# Ahegao
+Discord Bot
+
+
+README
