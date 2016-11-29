@@ -2,6 +2,8 @@
 "use strict";
 
 (function () {
+    var calculations = require('./calculations.js');
+
     module.exports.getBeatmapData = function (beatmapId, osu, callback) {
         var bMap = {
             artist: undefined,
@@ -11,7 +13,7 @@
             mapRank: undefined
         };
         osu.getBeatmap(beatmapId, function (err, obj) {
-            //avgRequests.requestsTotal++;
+            calculations.totalRequestsIncrement();
             if (err) {
                 console.log("Error retrieving beatmap object: " + err);
             } else if (obj) {

@@ -4,56 +4,52 @@
 (function () {
     var Promise = require('promise'),
         playerFormation = require('./playerFormation'),
-        today = new Date('1970-09-24 8:30:16');
+        today = new Date('1970-09-24 8:30:16'),
+        calculations = require('./calculations.js');
 
     module.exports.setUser = function (id, message, userObj, osu, callback) {
-        //avgRequests.requestsTotal++;
-    //    return new Promise(function (fullfill, reject) {
-            osu.getUser(id, 1, function (err, obj) {
-                if (err) {
-                    //reject(err);
-                    console.log(err);
-                } else if (obj) {
-                    userObj._id = obj.user_id;
-                    userObj.name = obj.username;
-                    userObj.rank = obj.pp_rank;
-                    userObj.pp = obj.pp_raw;
-                    userObj.accuracy = parseFloat(obj.accuracy).toFixed(2);
-                    userObj.serverId[0] = message.id;
-                    if (userObj._id !== 0) {
-                        callback();
-                    }
+        calculations.totalRequestsIncrement();
+        osu.getUser(id, 1, function (err, obj) {
+            if (err) {
+                console.log(err);
+            } else if (obj) {
+                userObj._id = obj.user_id;
+                userObj.name = obj.username;
+                userObj.rank = obj.pp_rank;
+                userObj.pp = obj.pp_raw;
+                userObj.accuracy = parseFloat(obj.accuracy).toFixed(2);
+                userObj.serverId[0] = message.id;
+                if (userObj._id !== 0) {
+                    callback();
                 }
-            });
-      //  });
+            }
+        });
     };
 
     module.exports.setRecentScores = function (user, userObj, osu, callback) {
-        //avgRequests.requestsTotal++;
-      //  return new Promise(function (fullfill, reject) {
-            osu.getUserRecent(user, function (err, obj) {
-                if (err) {
-                    //reject(err);
-                } else if (obj) {
-                    try {
-                        if (Object.keys(obj).length !== 0) {
-                            playerFormation.setRecent(obj, function (entry) {
-                                console.log(entry);
-                                userObj.recentScore = entry;
-                            });
-                        }
-                    } catch (error) {
-                        console.log(error);
+        calculations.totalRequestsIncrement();
+        osu.getUserRecent(user, function (err, obj) {
+            if (err) {
+                //reject(err);
+            } else if (obj) {
+                try {
+                    if (Object.keys(obj).length !== 0) {
+                        playerFormation.setRecent(obj, function (entry) {
+                            console.log(entry);
+                            userObj.recentScore = entry;
+                        });
                     }
+                } catch (error) {
+                    console.log(error);
                 }
-            });
-            callback();
-        //});
+            }
+        });
+        callback();
     };
 
     module.exports.getTopScores = function (userId, osu) {
-        //avgRequests.requestsTotal++;
         return new Promise(function (fullfill, reject) {
+            calculations.totalRequestsIncrement();
             osu.getUserBest(userId, function (err, obj) {
                 if (err) {
                     reject(err);

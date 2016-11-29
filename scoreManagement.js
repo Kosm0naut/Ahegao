@@ -61,7 +61,7 @@
 
     module.exports.checkTopScores = function (userObj, osu, callback) {
         var array = [], index = [];
-        //avgRequests.requestsTotal++;
+        calculations.totalRequestsIncrement();
         osu.getUserBest(userObj._id, function (err, res) {
             if (err) {
                 console.log(err);
@@ -134,7 +134,7 @@
     };
 
     module.exports.retrieveMostRecent = function (user, osu, db, mybot, callback) {
-        //avgRequests.requestsTotal++;
+        calculations.totalRequestsIncrement();
         osu.getUserRecent(user._id, function (err, obj) {
             if (err) {
                 console.log("Error retrieving latest scores array: " + err);

@@ -196,7 +196,7 @@
         }, accuracyChange;
         total.ppGained = parseFloat(userObj.totalpp);
         total.rank = userObj.totalrank;
-        //avgRequests.requestsTotal++;
+        calculations.totalRequestsIncrement();
         osu.getUser(userObj.name, 1, function (err, obj) {
             if (err) {
                 console.log("Error retrieving user object " + err);

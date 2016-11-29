@@ -2,6 +2,7 @@
 "use strict";
 
 (function () {
+    var totalRequests = 0;
 
     module.exports.getAcc = function (three, one, five, miss) {
         var sum = 0, denom = (parseFloat(five) + parseFloat(one) + parseFloat(three) + parseFloat(miss)) * 300;
@@ -80,10 +81,6 @@
         return 0;
     };
 
-    module.exports.avgRequestsIncrement = function () {
-        avgRequests = avgRequests + 1;
-    };
-
     module.exports.toHHMMSS = function (timeRunning) {
         var sec_num = parseInt(timeRunning, 10), hours   = Math.floor(sec_num / 3600), minutes = Math.floor((sec_num - (hours * 3600)) / 60), seconds = sec_num - (hours * 3600) - (minutes * 60);
 
@@ -91,6 +88,14 @@
         if (minutes < 10) { minutes = "0" + minutes; }
         if (seconds < 10) { seconds = "0" + seconds; }
         return hours + ':' + minutes + ':' + seconds;
+    };
+
+    module.exports.totalRequestsIncrement = function () {
+        totalRequests++;
+    };
+
+    module.exports.getTotalRequests = function () {
+        return totalRequests;
     };
 
 }());

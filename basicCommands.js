@@ -24,14 +24,14 @@
         });
     };
 
-    module.exports.getUser = function (user, channel) {
-        //avgRequests.requestsTotal++;
+    module.exports.getUser = function (author, user, channel) {
+        calculations.totalRequestsIncrement();
         osu.getUser(user, 1, function (err, obj) {
             if (err) {
                 console.log("Error retrieving user object: " + err);
             } else if (obj) {
                 //console.log("Server responded with an user object: " + obj);
-                channel.sendMessage("Player Name: **" + obj.username + " "
+                channel.sendMessage(author.toString() + " Player Name: **" + obj.username + " "
                     + "\n(https://osu.ppy.sh/u/" + obj.user_id + ")" + '**\nGlobal Rank: **' + obj.pp_rank
                     + '** \nPP: **' + obj.pp_raw + '**\nAccuracy: **' + Math.round(obj.accuracy * 100) / 100 + " %**.");
             }
@@ -67,6 +67,7 @@
 
     module.exports.getInfo = function (channel, server, avgRequests) {
         /*global toHHMMSS*/
+        avgRequests.requestsTotal = calculations.getTotalRequests();
         channel.sendMessage("**Global:** ```\nRequests per minute: " + parseFloat((avgRequests.requestsTotal / avgRequests.timeRunning) * 60).toFixed(2) + "\nTime running: " + calculations.toHHMMSS(avgRequests.timeRunning) + "\nRequests: " + avgRequests.requestsTotal + "```\n**Server:**\n```Is currently logging: " + server.botStarted + "\nIs currently tracking: " + server.trackStarted + "```");
     };
 

@@ -66,20 +66,20 @@ function main() {
     botStart();
 
     mybot.on('ready', function () {
-      if(!started) {
-        console.log('I am ready!');
-        started = true;
-        basicCommands.botSetGame("Renyan WanWan", mybot.user)
-            .then(function () {
-                messageHandler.onMessage(mybot, db);
-            }, function () {
-                console.log("Error");
-            })
-            .catch(function (e) {
-                console.log(e);
-            });
-    }
-  });
+        if (!started) {
+            console.log('I am ready!');
+            started = true;
+            basicCommands.botSetGame("a Renyan WanWan", mybot.user)
+                .then(function () {
+                    messageHandler.onMessage(mybot, db);
+                }, function () {
+                    console.log("Error");
+                })
+                    .catch(function (e) {
+                    console.log(e);
+                });
+        }
+    });
 }
 
 main();
