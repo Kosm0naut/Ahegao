@@ -5,8 +5,7 @@
     var MongoClient = require('mongodb').MongoClient,
         Promise = require('promise'),
         dotenv = require('dotenv').config(),
-        loginToken = process.env.discordToken,
-        connectionString = process.env.connectionString;
+        loginToken = process.env.discordToken;
 
     module.exports.loginWithToken = function (mybot) {
         mybot.login(loginToken)
@@ -18,7 +17,7 @@
 
     module.exports.loginToDatabase = function () {
         return new Promise(function (fullfill, reject) {
-            MongoClient.connect(connectionString, function (err, database) {
+            MongoClient.connect("mongodb://db:27017/DiscordBot", function (err, database) {
                 if (err) {
                     reject(err);
                 } else {
