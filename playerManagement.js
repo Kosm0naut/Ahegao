@@ -216,17 +216,17 @@
                                     /*global pushTopScores*/
                                     scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
                                         /*global printUpdateMessage*/
-                                        messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                      //  messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                             /*global updatePlayerStats*/
                                             playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                 .then(function () {
                                                     return callback();
                                                 });
-                                        });
+                                        //});
                                     });
                                 });
                             });
-                        } else {
+                        } else if (){
                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                     .then(function () {
