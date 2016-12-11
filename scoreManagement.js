@@ -79,15 +79,20 @@
         });
     };
 
-    module.exports.updateTopScores = function (newTopScores, callback) {
+    module.exports.updateTopScores = function (newTopScores) {
         var index = 0, arr = [];
-        newTopScores.forEach(function (topScore, indexas) {
-            index++;
-            arr.push(scoreManagement.formTopScore(topScore.beatmap_id, topScore.count300, topScore.count100, topScore.count50, topScore.countmiss, calculations.getMod(topScore.enabled_mods), topScore.rank, topScore.date, topScore.pp));
+        return new Promise(function (fullfill, reject) {
+          newTopScores.forEach(function (topScore) {
+              index++;
+              arr.push(scoreManagement.formTopScore(topScore.beatmap_id, topScore.count300, topScore.count100, topScore.count50, topScore.countmiss, calculations.getMod(topScore.enabled_mods), topScore.rank, topScore.date, topScore.pp));
+          });
+          if(index === newTopScores.length) {
+            wtf++;
+          }
+          if (index === newTopScores.length ) {
+              fullfill(arr);
+          }
         });
-        if (index === newTopScores.length) {
-            callback(arr);
-        }
     };
 
     module.exports.formTopScore = function (beatmapId, count300, count100, count50, countmiss, enabled_mods, mapRank, date, mapPp) {

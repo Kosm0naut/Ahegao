@@ -70,8 +70,7 @@
     };
 
     module.exports.findPlayerName = function (userName, db, callback) {
-        var spaceFix = userName.split("_").join(" ");
-        db.collection('user').find({"name": { $regex : new RegExp(spaceFix, "i") }}).toArray(function (err, items) {
+        db.collection('user').find({"name": { $regex : new RegExp(userName, "i") }}).toArray(function (err, items) {
             if (err) {
                 console.log("Error getting the server from the database. " + err);
             } else {
@@ -212,21 +211,24 @@
                             /*global printTopScoresUpdate*/
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 /*global updateTopScores*/
-                                scoreManagement.updateTopScores(topScores, function (topScoreArr) {
-                                    /*global pushTopScores*/
-                                    scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
-                                        /*global printUpdateMessage*/
-                                        messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
-                                            /*global updatePlayerStats*/
-                                            playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
-                                                .then(function () {
-                                                    return callback();
-                                                });
+                                //scoreManagement.updateTopScores(topScores, function (topScoreArr) {
+                                scoreManagement.updateTopScores(topScores)
+                                    .then(function (topScoreArr) {
+                                        /*global pushTopScores*/
+                                        scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
+                                            /*global printUpdateMessage*/
+                                            messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                                /*global updatePlayerStats*/
+                                                playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
+                                                    .then(function () {
+                                                        return callback();
+                                                    });
+                                            });
                                         });
                                     });
-                                });
+                              //  });
                             });
-                        } else if (score === undefined) {
+                        } else {
                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                     .then(function () {
