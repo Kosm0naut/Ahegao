@@ -209,18 +209,24 @@
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
                             /*global printTopScoresUpdate*/
+                            console.log('1');
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 /*global updateTopScores*/
+                                console.log('2');
                                 //scoreManagement.updateTopScores(topScores, function (topScoreArr) {
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
                                         /*global pushTopScores*/
+                                        console.log('3');
                                         scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
                                             /*global printUpdateMessage*/
+                                            console.log('4');
                                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                                 /*global updatePlayerStats*/
+                                                console.log('5');
                                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                     .then(function () {
+                                                        console.log('finished');
                                                         return callback();
                                                     });
                                             });

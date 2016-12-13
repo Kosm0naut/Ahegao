@@ -2,7 +2,8 @@
 "use strict";
 
 (function () {
-    var totalRequests = 0;
+    var totalRequests = 0,
+        calculations = require('./calculations.js');
 
     module.exports.getAcc = function (three, one, five, miss) {
         var sum = 0, denom = (parseFloat(five) + parseFloat(one) + parseFloat(three) + parseFloat(miss)) * 300;
@@ -80,6 +81,27 @@
         }
         return 0;
     };
+
+    module.exports.thousandOperator = function (textString) {
+        var number = parseInt(textString);
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    module.exports.getHitCount = function (hc300, hc100, hc50) {
+        var hc = parseInt(hc300) + parseInt(hc100) + parseInt(hc50);
+        return hc.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+    module.exports.getPageInGlobal = function (obj) {
+        var page = Math.ceil(parseInt(obj.pp_rank) / 50),
+            text;
+        if (page <= 200) {
+            text = '[#' + obj.pp_rank + '](https://osu.ppy.sh/p/pp/?m=0&s=3&o=1&f=&page=' + page + ')';
+        } else {
+            text = '#' + obj.pp_rank;
+        }
+        return text;
+    }
 
     module.exports.toHHMMSS = function (timeRunning) {
         var sec_num = parseInt(timeRunning, 10), hours   = Math.floor(sec_num / 3600), minutes = Math.floor((sec_num - (hours * 3600)) / 60), seconds = sec_num - (hours * 3600) - (minutes * 60);

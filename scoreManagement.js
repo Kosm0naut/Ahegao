@@ -80,18 +80,16 @@
     };
 
     module.exports.updateTopScores = function (newTopScores) {
-        var index = 0, arr = [];
+        var arr = [];
         return new Promise(function (fullfill, reject) {
-          newTopScores.forEach(function (topScore) {
+          newTopScores.forEach(function (topScore, index) {
               index++;
               arr.push(scoreManagement.formTopScore(topScore.beatmap_id, topScore.count300, topScore.count100, topScore.count50, topScore.countmiss, calculations.getMod(topScore.enabled_mods), topScore.rank, topScore.date, topScore.pp));
+              if (index === newTopScores.length-1 ) {
+                  fullfill(arr);
+                  console.log(arr);
+              }
           });
-          if(index === newTopScores.length) {
-            wtf++;
-          }
-          if (index === newTopScores.length ) {
-              fullfill(arr);
-          }
         });
     };
 
@@ -157,7 +155,7 @@
                                 if (obj[0].rank !== 'F') {
                                     //console.log("Recent score changes were found for " + user.name);
                                     /*global sendRecentUpdate*/
-                                    messageManagement.sendRecentUpdate(mybot, user, obj, bMap, calculatedAcc, db, function () {
+                                    messageManagement.sendRecentUpdate(mybot, user, obj, bMap, calculatedAcc, db, osu, function () {
                                         callback();
                                     });
                                 }

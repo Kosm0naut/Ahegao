@@ -2,7 +2,8 @@
 "use strict";
 
 (function () {
-    var calculations = require('./calculations.js');
+    var calculations = require('./calculations.js'),
+        Promise = require('promise');
 
     module.exports.getBeatmapData = function (beatmapId, osu, callback) {
         var bMap = {
@@ -33,6 +34,19 @@
                 }
             }
         });
+    };
+
+    module.exports.getBeatmapset = function (beatmapId, osu) {
+        return new Promise(function (fullfill, reject) {
+        osu.getBeatmap(beatmapId, function (err, obj) {
+            calculations.totalRequestsIncrement();
+            if (err) {
+                reject(err);
+            } else if (obj) {
+                fullfill(obj.beatmapset_id);
+            }
+        });
+      });
     };
 
 

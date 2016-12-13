@@ -31,9 +31,52 @@
                 console.log("Error retrieving user object: " + err);
             } else if (obj) {
                 //console.log("Server responded with an user object: " + obj);
-                channel.sendMessage(author.toString() + " Player Name: **" + obj.username + " "
+                /*channel.sendMessage(author.toString() + " Player Name: **" + obj.username + " "
                     + "\n(https://osu.ppy.sh/u/" + obj.user_id + ")" + '**\nGlobal Rank: **' + obj.pp_rank
-                    + '** \nPP: **' + obj.pp_raw + '**\nAccuracy: **' + Math.round(obj.accuracy * 100) / 100 + " %**.");
+                    + '** \nPP: **' + obj.pp_raw + '**\nAccuracy: **' + Math.round(obj.accuracy * 100) / 100 + " %**.");*/
+                channel.sendMessage(author.toString(), {embed: {
+                    color: 3447003,
+                    author: {
+                        name: obj.username,
+                        url: 'https://osu.ppy.sh/u/' + obj.user_id,
+                        icon_url: 'https://s.ppy.sh/images/flags/' + obj.country.toLowerCase() + '.gif'
+                    },
+                    thumbnail: {
+                      url: 'http://s.ppy.sh/a/' + obj.user_id
+                    },
+                    fields: [
+                        {
+                            name: 'Global Rank',
+                            value: calculations.getPageInGlobal(obj),
+                            inline: true
+                        },
+                        {
+                            name: 'Country Rank',
+                            value: '[#' + obj.pp_country_rank + '](https://osu.ppy.sh/p/pp?s=3&o=1&c=' + obj.country + '&find=' + obj.username + '&m=0#jumpto)',
+                            inline: true
+                        },
+                        {
+                            name: 'Total PP',
+                            value: obj.pp_raw,
+                            inline: true
+                        },
+                        {
+                            name: 'Accuracy',
+                            value: Math.round(obj.accuracy * 100) / 100 + " %",
+                            inline: true
+                        },
+                        {
+                            name: 'Play Count',
+                            value: calculations.thousandOperator(obj.playcount),
+                            inline: true
+                        },
+                        {
+                            name: 'Hit Count',
+                            value: calculations.getHitCount(obj.count300, obj.count100, obj.count50),
+                            inline: true
+                        }
+                    ]
+                }});
             }
         });
     };

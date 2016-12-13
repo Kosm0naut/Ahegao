@@ -20,8 +20,8 @@
   },
   "homepage": "https://github.com/Kosm0naut/Ahegao#readme",
   "dependencies": {
-    "discord.js": "^10.0.1",
     "cron": "^1.1.1",
+    "discord.js": "github:hydrabolt/discord.js#indev",
     "dotenv": "^2.0.0",
     "mongodb": "^2.2.11",
     "osu-api": "^0.0.3",
