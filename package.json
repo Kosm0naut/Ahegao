@@ -1,0 +1,30 @@
+{
+  "name": "ahegao",
+  "version": "1.0.0",
+  "description": "bot",
+  "main": "ahegao.js",
+  "scripts": {
+    "start": "node Ahegao.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kosm0naut/Ahegao.git"
+  },
+  "keywords": [
+    "ahegao"
+  ],
+  "author": "Dom",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kosm0naut/Ahegao/issues"
+  },
+  "homepage": "https://github.com/Kosm0naut/Ahegao#readme",
+  "dependencies": {
+    "cron": "^1.1.1",
+    "discord.js": "github:hydrabolt/discord.js#indev",
+    "dotenv": "^2.0.0",
+    "mongodb": "^2.2.11",
+    "osu-api": "^0.0.3",
+    "promise": "^7.1.1"
+  }
+}
