@@ -171,7 +171,7 @@
     module.exports.playerObjFormation = function (name, totalpp, totalrank, callback) {
         var res = {
           name: name,
-          value: '**PP**: ' + totalpp + '\n**Total Rank**: ' + totalrank,
+          value: '```PP:   ' + totalpp + '\nRank: ' + totalrank + '```',
           inline: true
         };
         if (res.name !== undefined) {
