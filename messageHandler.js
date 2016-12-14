@@ -4,7 +4,8 @@
 (function () {
     var serverManagement = require('./serverManagement.js'),
         playerManagement = require('./playerManagement.js'),
-        basicCommands = require('./basicCommands.js');
+        basicCommands = require('./basicCommands.js'),
+        messageManagement = require('./messageManagement.js');
         //interval;
 
     module.exports.onMessage = function (mybot, db) {
@@ -28,7 +29,7 @@
                         message.content.toLowerCase().indexOf('leaguė') >= 0 ||
                         message.content.toLowerCase().indexOf('lėague') >= 0 ||
                         message.content.toLowerCase().indexOf('lėaguė') >= 0) {
-                      found = true;
+                    found = true;
                     }
                     if (found) {
                       message.channel.sendMessage(user.toString() + " can just shut up?");
@@ -75,9 +76,10 @@
                         } else {
                             /*global printPlayerList*/
                             playerManagement.printPlayerList(message.channel, db)
-                                .then(function (arr) {
-                                    if (arr.length !== 0) {
-                                        message.channel.sendMessage(arr);
+                                .then(function (playersArr) {
+                                    if (playersArr.length !== 0) {
+                                        playersArr.sort((a, b) => a.name.localeCompare(b.name));
+                                        messageManagement.printGainsMessage(playersArr, message.channel);
                                     }
                                 }, function () {
                                     message.channel.sendMessage(user.toString() + " No users were found in the database.");

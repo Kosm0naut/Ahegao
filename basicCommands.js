@@ -13,7 +13,24 @@
     module.exports.gains = function (name, db, channel) {
         playerManagement.findPlayerName(name, db, function (items) {
             if (items.length !== 0) {
-                channel.sendMessage("Today,** " + items[0].name + "** got **" + parseFloat(items[0].totalpp).toFixed(2) + "**pp and **" + items[0].totalrank + "** ranks.")
+                channel.sendMessage(" ", {embed: {
+                    color: 3447003,
+                    author: {
+                        name: 'PP gains for ' + items[0].name,
+                        url: 'https://osu.ppy.sh/u/' + items[0]._id,
+                        icon_url: 'http://s.ppy.sh/a/' + items[0]._id
+                    },
+                    thumbnail: {
+                        url: 'http://s.ppy.sh/a/' + items[0]._id
+                    },
+                    fields: [
+                        {
+                            name: items[0].name.toString(),
+                            value: '**PP**: ' + items[0].totalpp.toString() + '\n**Total Rank**: ' + items[0].totalrank.toString(),
+                            inline: true
+                        }
+                    ]
+                }})
                     .then()
                     .catch(function (e) {
                         console.log(e);
@@ -42,7 +59,7 @@
                         icon_url: 'https://s.ppy.sh/images/flags/' + obj.country.toLowerCase() + '.gif'
                     },
                     thumbnail: {
-                      url: 'http://s.ppy.sh/a/' + obj.user_id
+                        url: 'http://s.ppy.sh/a/' + obj.user_id
                     },
                     fields: [
                         {

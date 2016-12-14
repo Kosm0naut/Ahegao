@@ -63,58 +63,73 @@
     };
 
     module.exports.printTopScoresUpdate = function (mybot, osu, db, userObj, score, index, callback) {
-        console.log("as ce");
-        beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
-            userObj.serverId.forEach(function (serverId, i) {
-                serverManagement.findServer(serverId, db, function (item) {
-                    if (item[0].botStarted) {
-                        /*mybot.channels.get(item[0]._id).sendMessage("**" + userObj.name +
-                            "**: \nNew Top Score **#" + (index + 1) +  "**: \nMap: **" + obj.artist + " - " + obj.title + " [" + obj.diff + "] " +
-                            "\n(https://osu.ppy.sh/b/" + score.beatmap_id + ")**\nCombo: **" + score.maxcombo + "x** Misses: **" + score.countmiss +
-                            "**\nGrade: **" + score.rank + "** Accuracy: **" + parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) +
-                            " %** \nMods: **" + calculations.getMod(score.enabled_mods) + "** Weighted: **" + score.pp + "**");*/
-                        mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
-                            color: 3447003,
-                            author: {
-                                name: userObj.name,
-                                url: 'https://osu.ppy.sh/u/' + userObj._id,
-                                icon_url: 'http://s.ppy.sh/a/' + userObj._id
-                            },
-                            fields: [
-                                {
-                                    name: 'New top score **#' + (index + 1) + '**:',
-                                    value: '[' + obj.artist + " - " + obj.title + " [" + obj.diff + "]](https://osu.ppy.sh/b/" + score.beatmap_id + ')',
-                                    inline: false
-                                },
-                                {
-                                    name: '**Combo **',
-                                    value: score.maxcombo + 'x ' + score.countmiss + ' misses',
-                                    inline: true
-                                },
-                                {
-                                    name: "**Mods **",
-                                    value: calculations.getMod(score.enabled_mods).toString(),
-                                    inline: true
-                                },
-                                {
-                                    name: "**Accuracy **",
-                                    value: parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) + " % (**" + score.rank + "**)",
-                                    inline: true
-                                },
-                                {
-                                    name: "**Weighted **",
-                                    value: score.pp,
-                                    inline: true
-                                }
-                            ]
-                        }});
-                    }
+        beatmapManagement.getBeatmapset(score.beatmap_id, osu)
+            .then(function (beatmapsetId) {
+                beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
+                    userObj.serverId.forEach(function (serverId, i) {
+                        serverManagement.findServer(serverId, db, function (item) {
+                            if (item[0].botStarted) {
+                                mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
+                                    color: 3447003,
+                                    author: {
+                                        name: userObj.name,
+                                        url: 'https://osu.ppy.sh/u/' + userObj._id,
+                                        icon_url: 'http://s.ppy.sh/a/' + userObj._id
+                                    },
+                                    thumbnail: {
+                                        url: 'https://b.ppy.sh/thumb/' + beatmapsetId + 'l.jpg'
+                                    },
+                                    fields: [
+                                        {
+                                            name: 'New top score **#' + (index + 1) + '**:',
+                                            value: '[' + obj.artist + " - " + obj.title + " [" + obj.diff + "]](https://osu.ppy.sh/b/" + score.beatmap_id + ')',
+                                            inline: false
+                                        },
+                                        {
+                                            name: '**Combo **',
+                                            value: score.maxcombo + 'x ' + score.countmiss + ' misses',
+                                            inline: true
+                                        },
+                                        {
+                                            name: "**Mods **",
+                                            value: calculations.getMod(score.enabled_mods).toString(),
+                                            inline: true
+                                        },
+                                        {
+                                            name: "**Accuracy **",
+                                            value: parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) + " % (**" + score.rank + "**)",
+                                            inline: true
+                                        },
+                                        {
+                                            name: "**Weighted **",
+                                            value: score.pp,
+                                            inline: true
+                                        }
+                                    ]
+                                }});
+                            }
+                        });
+                        if (i === userObj.serverId.length - 1) {
+                            callback();
+                        }
+                    });
                 });
-                if (i === userObj.serverId.length - 1) {
-                    callback();
-                }
             });
-        });
+    };
+
+    module.exports.printGainsMessage = function (arr, channel) {
+        channel.sendMessage(" ", {embed: {
+            color: 3447003,
+            author: {
+                name: 'PP totals for ' + channel.name,
+                icon_url: channel.guild.iconURL
+            },
+            thumbnail: {
+                url: 'http://i.imgur.com/COGvggB.png'
+            },
+            description: channel.topic,
+            fields: arr
+        }});
     };
 
     module.exports.printUpdateMessage = function (mybot, userObj, obj, accuracyChange, total, db, callback) {

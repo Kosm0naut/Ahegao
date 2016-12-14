@@ -153,7 +153,7 @@
                     i++;
                     player.serverId.forEach(function (server, index2) {
                         if (items[index].serverId[index2] === channel.id) {
-                            playerManagement.playerStringFormation(items[index].name, parseFloat(items[index].totalpp).toFixed(2), items[index].totalrank, function (res) {
+                            playerManagement.playerObjFormation(items[index].name, parseFloat(items[index].totalpp).toFixed(2), items[index].totalrank, function (res) {
                                 serverGains.push(res);
                             });
                         }
@@ -168,10 +168,13 @@
         });
     };
 
-    module.exports.playerStringFormation = function (name, totalpp, totalrank, callback) {
-        var res = "", str = "";
-        res = str.concat("**", name, ":**\t\t PP: **", totalpp, "**\t Ranks: **", totalrank, "**");
-        if (res !== "") {
+    module.exports.playerObjFormation = function (name, totalpp, totalrank, callback) {
+        var res = {
+          name: name,
+          value: '**PP**: ' + totalpp + '\n**Total Rank**: ' + totalrank,
+          inline: true
+        };
+        if (res.name !== undefined) {
             callback(res);
         }
     };
@@ -209,24 +212,18 @@
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
                             /*global printTopScoresUpdate*/
-                            console.log('1');
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 /*global updateTopScores*/
-                                console.log('2');
                                 //scoreManagement.updateTopScores(topScores, function (topScoreArr) {
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
                                         /*global pushTopScores*/
-                                        console.log('3');
                                         scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
                                             /*global printUpdateMessage*/
-                                            console.log('4');
                                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                                 /*global updatePlayerStats*/
-                                                console.log('5');
                                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                     .then(function () {
-                                                        console.log('finished');
                                                         return callback();
                                                     });
                                             });
