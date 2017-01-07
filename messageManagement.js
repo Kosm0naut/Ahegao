@@ -55,7 +55,7 @@
                             }});
                         }
                     });
-                    if (i === user.trackedBy.length - 1) {
+                    if (i === user.trackedBy.length - 1 || user.trackedBy.length === 0) {
                         callback();
                     }
                 });
@@ -109,7 +109,7 @@
                                 }});
                             }
                         });
-                        if (i === userObj.serverId.length - 1) {
+                        if (i === userObj.serverId.length - 1 || userObj.serverId.length === 0) {
                             callback();
                         }
                     });
@@ -134,18 +134,16 @@
 
     module.exports.printUpdateMessage = function (mybot, userObj, obj, accuracyChange, total, db, callback) {
         userObj.serverId.forEach(function (server, i) {
-            i++;
             serverManagement.findServer(server, db, function (item) {
-                if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 1)) {
-                    console.log("PP Gained by" + userObj.name);
+                if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 0)) {
                     /*global getChar*/
-                    /*mybot.channels.get(item[0]._id).sendMessage("**" + userObj.name +
+                    mybot.channels.get(item[0]._id).sendMessage("**" + userObj.name +
                         '**:\n**' + calculations.getChar(userObj.pp, obj.pp_raw) + Math.abs(Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) + '** pp **\n' +
                         calculations.getChar(obj.pp_rank, userObj.rank) + Math.abs(Math.round(calculations.checkForChanges(userObj.rank, obj.pp_rank) * 100) / 100) + '** Ranks \n**' +
                         calculations.getChar(parseFloat(userObj.accuracy), parseFloat(obj.accuracy)) + Math.abs(parseFloat(accuracyChange)).toFixed(2) + "%** Accuracy**\n" +
                         (total.ppGained).toFixed(2) + '** pp this session **\n' +
-                        total.rank + '** ranks this session');*/
-                    mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
+                        total.rank + '** ranks this session');
+                    /*mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
                         color: 3447003,
                         author: {
                             name: userObj.name,
@@ -162,10 +160,14 @@
                                 inline: false
                             }
                         ]
-                    }});
+                    }}).then(function () {
+
+                    }, function(err) {
+                      console.log(err);
+                    })*/
                 }
             });
-            if (i === userObj.serverId.length - 1) {
+            if (i === userObj.serverId.length - 1 || userObj.serverId.length === 0) {
                 callback();
             }
         });

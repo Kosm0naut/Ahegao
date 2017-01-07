@@ -140,7 +140,7 @@
         calculations.totalRequestsIncrement();
         osu.getUserRecent(user._id, function (err, obj) {
             if (err) {
-                console.log("Error retrieving latest scores array: " + err);
+                console.log("Error scoreManagement.js line 143: " + err);
             } else if (obj) {
                 try {
                     if (Object.keys(obj).length !== 0) {
@@ -153,17 +153,18 @@
                             /*global getBeatmapData*/
                             beatmapManagement.getBeatmapData(obj[0].beatmap_id, osu, function (bMap) {
                                 if (obj[0].rank !== 'F') {
-                                    //console.log("Recent score changes were found for " + user.name);
                                     /*global sendRecentUpdate*/
                                     messageManagement.sendRecentUpdate(mybot, user, obj, bMap, calculatedAcc, db, osu, function () {
                                         callback();
                                     });
+                                } else if (obj[0].rank === 'F') {
+                                   callback();
                                 }
                             });
                         }
                     }
                 } catch (error) {
-                    console.log("Error: " + error);
+                    console.log("Error scoreManagement.js line 167: " + error);
                 }
             }
         });

@@ -171,7 +171,7 @@
     module.exports.playerObjFormation = function (name, totalpp, totalrank, callback) {
         var res = {
           name: name,
-          value: '```PP:   ' + totalpp + '\nRank: ' + totalrank + '```',
+          value: '```PP   :' + totalpp + '\nRank: ' + totalrank + '```',
           inline: true
         };
         if (res.name !== undefined) {
@@ -224,7 +224,7 @@
                                                 /*global updatePlayerStats*/
                                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                     .then(function () {
-                                                        return callback();
+                                                        callback();
                                                     });
                                             });
                                         });
@@ -234,8 +234,10 @@
                         } else {
                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
-                                    .then(function () {
-                                        return callback();
+                                    .then(function (response) {
+                                        callback();
+                                    }, function (err) {
+                                      console.log("Error playerManagement.js line 241: " + err);
                                     });
                             });
                         }
@@ -269,7 +271,7 @@
                         //channel.sendMessage("User already exists in the list.");
                     }
                 } else {
-                    console.log("Something is wrong, no one was supposed to end up here ._.");
+                    console.log("Error playerManagement.js line 275");
                 }
             });
         });
