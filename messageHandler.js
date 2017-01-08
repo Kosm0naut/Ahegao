@@ -25,18 +25,32 @@
                     text = message.content.substr(index + 1),  // Gets the text part
                     user = message.author,
                     found = false;
-                    if(message.content.toLowerCase().indexOf('league') >= 0 ||
+                    //**************************RANDOM BULLSHIT ALERT
+                    if((message.content.toLowerCase().indexOf('league') >= 0 ||
                         message.content.toLowerCase().indexOf('leaguė') >= 0 ||
                         message.content.toLowerCase().indexOf('lėague') >= 0 ||
-                        message.content.toLowerCase().indexOf('lėaguė') >= 0) {
+                        message.content.toLowerCase().indexOf('lėaguė') >= 0) &&
+                        message.content.toLowerCase().indexOf('rocket league') === -1) {
                     found = true;
                     }
                     if (found) {
                       message.channel.sendMessage(user.toString() + " can just shut up?");
                       found = false;
                     }
+                    //*************************NORMAL (RELATIVELY) FUNCTIONALITY
                 try {
                     switch (splitMessage[0]) {
+                    case mybot.user.toString():
+                          if (splitMessage[1] != null) {
+                            messageManagement.askRem(text, function (response) {
+                                if (response) {
+                                    message.channel.sendMessage(user.toString() + " " + response);
+                                }
+                            });
+                          } else {
+                            message.channel.sendMessage(user.toString() + "What is it?");
+                          }
+                        break;
                     case "!user": //!user
                         /*global getUser*/
                         basicCommands.getUser(user, text, message.channel);
@@ -130,43 +144,6 @@
                         break;
                     case "!info":
                         basicCommands.getInfo(message.channel, serverStarted[0], avgRequests);
-                        break;
-                    case "!bulka":
-                        message.channel.sendMessage(" ", {embed: {
-                            color: 3447003,
-                            author: {
-                                name: mybot.user.username,
-                                icon_url: mybot.user.avatarURL
-                            },
-                            title: 'This is an embed',
-                            url: 'http://google.com',
-                            description: 'This is a test embed to showcase what they look like and what they can do.',
-                            fields: [
-                                {
-                                    name: 'Fields',
-                                    value: 'They can have \ndifferent fiel\nds with small headlines.'
-                                },
-                                {
-                                    name: 'Masked links',
-                                    value: 'You can put [masked links](http://google.com) inside of rich embeds.'
-                                },
-                                {
-                                    name: 'Markdown',
-                                    value: 'You can put all the *usual* **__Markdown__** inside of them.'
-                                }
-                            ],
-                            timestamp: new Date(),
-                            footer: {
-                                icon_url: mybot.user.avatarURL,
-                                text: '© Example'
-                            }
-                        }}).then(function (res) {
-                            console.log(res);
-                        }, function (err) {
-                            console.log(err);
-                        }).catch(function (err) {
-                            console.log(err);
-                        });
                         break;
                     case "!setMessage":
                         /*global botSetGame*/

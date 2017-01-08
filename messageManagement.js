@@ -7,7 +7,13 @@
         //playerFormation = require('./playerFormation'),
         calculations = require('./calculations'),
         serverManagement = require('./serverManagement'),
-        beatmapManagement = require('./beatmapManagement');
+        beatmapManagement = require('./beatmapManagement'),
+        messageManagement = require('./messageManagement'),
+        cleverbot = require('cleverbot.io'),
+        dotenv = require('dotenv').config(),
+        bot = new cleverbot(process.env.cleverBotApiUser, process.env.cleverBotApiKey),
+        botSession='supersecretrembotchat';
+    bot.setNick(botSession);
 
     module.exports.sendRecentUpdate = function (mybot, user, obj, bMap, calculatedAcc, db, osu, callback) {
         beatmapManagement.getBeatmapset(obj[0].beatmap_id, osu)
@@ -135,7 +141,7 @@
     module.exports.printUpdateMessage = function (mybot, userObj, obj, accuracyChange, total, db, callback) {
         userObj.serverId.forEach(function (server, i) {
             serverManagement.findServer(server, db, function (item) {
-                if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 0)) {
+                if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 1)) {
                     /*global getChar*/
                     mybot.channels.get(item[0]._id).sendMessage("**" + userObj.name +
                         '**:\n**' + calculations.getChar(userObj.pp, obj.pp_raw) + Math.abs(Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) + '** pp **\n' +
@@ -171,6 +177,14 @@
                 callback();
             }
         });
+    };
+
+    module.exports.askRem = function (message, callback) {
+      bot.create(function (err, session) {
+        bot.ask(message, function (err, response) {
+            callback(response);
+        });
+      });
     };
 
 }());
