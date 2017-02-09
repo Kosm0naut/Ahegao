@@ -21,7 +21,7 @@
             /*global findServer*/
             serverManagement.findServer(message.channel.id, db, function (serverStarted) {
                 var splitMessage = message.content.split(" "),
-                    index = message.content.indexOf(" "),  // Gets the first index where a space occours
+                    index = message.content.indexOf(" "),  // Gets the first index where a space occurs
                     text = message.content.substr(index + 1),  // Gets the text part
                     user = message.author,
                     found = false;
