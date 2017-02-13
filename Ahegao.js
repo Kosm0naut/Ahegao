@@ -1,4 +1,4 @@
-/*jslint devel: true, node: true*/
+/*jslint devel: true, node: true, plusplus: true, nomen: true, bitwise: true*/
 "use strict";
 
 var Discord = require("discord.js"),
@@ -66,16 +66,23 @@ function main() {
     botStart();
 
     mybot.on('ready', function () {
-        console.log('I am ready!');
-        basicCommands.botSetGame("a Renyan WanWan", mybot.user)
-            .then(function () {
-                messageHandler.onMessage(mybot, db);
-            }, function () {
-                console.log("Error");
-            })
-            .catch(function (e) {
-                console.log(e);
-            });
+        if (!started) {
+            console.log('I am ready!');
+            started = true;
+            basicCommands.botSetGame("a Renyan WanWan", mybot.user)
+                .then(function () {
+                    messageHandler.onMessage(mybot, db);
+                }, function () {
+                    console.log("Error");
+                })
+                .catch(function (e) {
+                    console.log(e);
+                });
+        }
+    });
+
+    mybot.on('disconnect', function () {
+        connections.loginWithToken(mybot);
     });
 }
 
