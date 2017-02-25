@@ -81,8 +81,8 @@ function main() {
         }
     });
 
-    mybot.on('disconnect', function () {
-        connections.loginWithToken(mybot);
+    mybot.on('error', function () {
+        mybot.channels.get('191933614273855488').sendMessage("Something went wrong with my connection");
     });
 }
 
