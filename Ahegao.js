@@ -9,22 +9,29 @@ var Discord = require("discord.js"),
     connections = require('./connections.js'),
     scoreManagement = require('./scoreManagement.js'),
     playerManagement = require('./playerManagement'),
+    serverManagement = require('./serverManagement.js'),
+    messageManagement = require('./messageManagement.js'),
     dotenv = require('dotenv').config(),
     db,
     interval,
     started = false,
     osuapi = require('osu-api'),
     osu = new osuapi.Api(process.env.osuApi, osuapi.Modes.osu),
-    avgRequests = {
-        reqInterval: undefined,
-        timeRunning: 0,
-        requestsTotal: 300
-    },
 
     job = new CronJob({
         cronTime: '59 59 23 * * 0-6',
         onTick: function () {
-            /*global resetPlayerStats*/
+            serverManagement.findServers(db, function (servers) {
+                servers.forEach(function (server) {
+                    playerManagement.printPlayerList(mybot.channels.get(server._id), db)
+                        .then(function (playersArr) {
+                            if (playersArr.length !== 0) {
+                                playersArr.sort((a, b) => a.name.localeCompare(b.name));
+                                messageManagement.printGainsMessage(playersArr, mybot.channels.get(server._id));
+                            }
+                        });
+                });
+            });
             playerManagement.resetPlayerStats(db)
                 .then(function () {
                     console.log("Refreshed PP and Ranks");
@@ -81,8 +88,11 @@ function main() {
         }
     });
 
-    mybot.on('error', function (message) {
-        mybot.channels.get('191933614273855488').sendMessage("Something went wrong with my connection: " + message);
+    mybot.on('disconnect', function (message) {
+        if (message.code !== 4005) {
+            console.log("Something went wrong with my connection: Error code " + message.code);
+            mybot.destroy().then(() => connections.loginWithToken(mybot));
+        }
     });
 }
 

@@ -32,6 +32,16 @@
         });
     };
 
+    module.exports.findServers = function (db, callback) {
+        db.collection('server').find({}).toArray(function (err, items) {
+            if (err) {
+                console.log("Error getting the server from the database " + err);
+            } else if (items) {
+                callback(items);
+            }
+        });
+    };
+
     module.exports.updateServer = function (id, botStarted, db, callback) {
         db.collection('server').updateOne(
             { "_id" : id },

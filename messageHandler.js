@@ -6,13 +6,13 @@
         playerManagement = require('./playerManagement.js'),
         basicCommands = require('./basicCommands.js'),
         messageManagement = require('./messageManagement.js');
-        //interval;
 
     module.exports.onMessage = function (mybot, db) {
         var avgRequests = {
             reqInterval: undefined,
             timeRunning: 0,
-            requestsTotal: 0
+            requestsTotal: 0,
+            timesDisconnected: 0
         };
         avgRequests.reqInterval = setInterval(function () {
             avgRequests.timeRunning++;
@@ -23,33 +23,19 @@
                 var splitMessage = message.content.split(" "),
                     index = message.content.indexOf(" "),  // Gets the first index where a space occurs
                     text = message.content.substr(index + 1),  // Gets the text part
-                    user = message.author,
-                    found = false;
-                    //**************************RANDOM BULLSHIT ALERT
-                    if((message.content.toLowerCase().indexOf('league') >= 0 ||
-                        message.content.toLowerCase().indexOf('leaguė') >= 0 ||
-                        message.content.toLowerCase().indexOf('lėague') >= 0 ||
-                        message.content.toLowerCase().indexOf('lėaguė') >= 0) &&
-                        message.content.toLowerCase().indexOf('rocket league') === -1) {
-                    found = true;
-                    }
-                    if (found) {
-                      message.channel.sendMessage(user.toString() + " can just shut up?");
-                      found = false;
-                    }
-                    //*************************NORMAL (RELATIVELY) FUNCTIONALITY
+                    user = message.author;
                 try {
                     switch (splitMessage[0]) {
                     case mybot.user.toString():
-                          if (splitMessage[1] != null) {
+                        if (splitMessage[1] != null) {
                             messageManagement.askRem(text, function (response) {
                                 if (response) {
                                     message.channel.sendMessage(user.toString() + " " + response);
                                 }
                             });
-                          } else {
+                        } else {
                             message.channel.sendMessage(user.toString() + "What is it?");
-                          }
+                        }
                         break;
                     case "!user": //!user
                         /*global getUser*/
