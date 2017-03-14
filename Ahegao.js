@@ -87,13 +87,6 @@ function main() {
                 });
         }
     });
-
-    mybot.on('disconnect', function (message) {
-        if (message.code !== 4005) {
-            console.log("Something went wrong with my connection: Error code " + message.code);
-            mybot.destroy().then(() => connections.loginWithToken(mybot));
-        }
-    });
 }
 
 main();
