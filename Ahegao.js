@@ -19,7 +19,7 @@ var Discord = require("discord.js"),
     osu = new osuapi.Api(process.env.osuApi, osuapi.Modes.osu),
 
     job = new CronJob({
-        cronTime: '59 59 23 * * 0-6',
+        cronTime: '59 58 23 * * 0-6',
         onTick: function () {
             serverManagement.findServers(db, function (servers) {
                 servers.forEach(function (server) {
@@ -32,6 +32,15 @@ var Discord = require("discord.js"),
                         });
                 });
             });
+        },
+        start: false,
+        timeZone: 'Europe/Copenhagen'
+    });
+job.start();
+
+    reset = new CronJob({
+                cronTime: '59 59 23 * * 0-6',
+        onTick: function () {
             playerManagement.resetPlayerStats(db)
                 .then(function () {
                     console.log("Refreshed PP and Ranks");
@@ -42,7 +51,7 @@ var Discord = require("discord.js"),
         start: false,
         timeZone: 'Europe/Copenhagen'
     });
-job.start();
+reset.start();
 
 function botStart() {
     console.log("Starting the bot..");
