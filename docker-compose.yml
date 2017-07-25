@@ -1,6 +1,5 @@
 db:
   image: mongo
-  command: tail -f /dev/null
   ports:
     - 27017
   volumes:
