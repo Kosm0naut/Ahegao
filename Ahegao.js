@@ -35,8 +35,7 @@ var Discord = require("discord.js"),
         },
         start: false,
         timeZone: 'Europe/Copenhagen'
-    });
-job.start();
+    }),
 
     reset = new CronJob({
                 cronTime: '59 59 23 * * 0-6',
@@ -47,10 +46,17 @@ job.start();
                 }, function (err) {
                     console.log("Error refreshing ranks " + err);
                 });
+            playerManagement.deleteInactivePlayers(db)
+                .then(function () {
+                    console.log("Deleted players with no active servers");
+                }, function (err) {
+                    console.log("Error deleting inactive players " + err);
+                });
         },
         start: false,
         timeZone: 'Europe/Copenhagen'
     });
+job.start();
 reset.start();
 
 function botStart() {

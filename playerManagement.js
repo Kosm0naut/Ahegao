@@ -124,6 +124,22 @@
         });
     };
 
+    /*module.exports.deleteInactivePlayers = function (db) {
+        return new Promise(function (fullfill, reject) {
+            db.collection('user').deleteMany(
+                { "serverId" : {} 
+                },
+                function (err, results) {
+                    if (err) {
+                        reject(err);
+                    } else if (results) {
+                        fullfill();
+                    }
+                }
+            )
+        });
+    };*/
+
     module.exports.removePlayer = function (playerName, channel, db) {
         return new Promise(function (fullfill, reject) {
             playerManagement.findPlayerName(playerName, function (res) {
