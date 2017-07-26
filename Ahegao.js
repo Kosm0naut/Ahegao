@@ -46,12 +46,12 @@ var Discord = require("discord.js"),
                 }, function (err) {
                     console.log("Error refreshing ranks " + err);
                 });
-            playerManagement.deleteInactivePlayers(db)
+            /*playerManagement.deleteInactivePlayers(db)
                 .then(function () {
                     console.log("Deleted players with no active servers");
                 }, function (err) {
                     console.log("Error deleting inactive players " + err);
-                });
+                });*/
         },
         start: false,
         timeZone: 'Europe/Copenhagen'
