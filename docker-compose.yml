@@ -6,6 +6,8 @@ db:
     - ./data:/data/db
 web:
   build: .
+  depends_on:
+    - db
   volumes:
     - .:/app
   links:
