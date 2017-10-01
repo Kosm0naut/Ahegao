@@ -1,6 +1,7 @@
-FROM node:8.6.0
-RUN apt-get update && \
-    apt-get upgrade
+FROM node:7-alpine
+RUN apk update && \
+    apk upgrade && \
+    apk add git
     
 # Create app directory
 RUN mkdir -p /usr/src/app
