@@ -1,4 +1,4 @@
-FROM node:7-alpine
+FROM node:8.6.0
 RUN apk update && \
     apk upgrade && \
     apk add git
