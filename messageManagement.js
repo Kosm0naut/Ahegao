@@ -179,12 +179,12 @@
         });
     };
 
-    module.exports.askRem = function (message, callback) {
+    /*module.exports.askRem = function (message, callback) {
       bot.create(function (err, session) {
         bot.ask(message, function (err, response) {
             callback(response);
         });
       });
-    };
+    };*/
 
 }());

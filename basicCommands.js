@@ -47,10 +47,6 @@
             if (err) {
                 console.log("Error retrieving user object: " + err);
             } else if (obj) {
-                //console.log("Server responded with an user object: " + obj);
-                /*channel.sendMessage(author.toString() + " Player Name: **" + obj.username + " "
-                    + "\n(https://osu.ppy.sh/u/" + obj.user_id + ")" + '**\nGlobal Rank: **' + obj.pp_rank
-                    + '** \nPP: **' + obj.pp_raw + '**\nAccuracy: **' + Math.round(obj.accuracy * 100) / 100 + " %**.");*/
                 channel.sendMessage(author.toString(), {embed: {
                     color: 3447003,
                     author: {

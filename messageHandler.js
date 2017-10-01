@@ -26,7 +26,7 @@
                     user = message.author;
                 try {
                     switch (splitMessage[0]) {
-                    case mybot.user.toString():
+                    /*case mybot.user.toString():
                         if (splitMessage[1] != null) {
                             messageManagement.askRem(text, function (response) {
                                 if (response) {
@@ -36,7 +36,7 @@
                         } else {
                             message.channel.sendMessage(user.toString() + "What is it?");
                         }
-                        break;
+                        break;*/
                     case "!user": //!user
                         /*global getUser*/
                         basicCommands.getUser(user, text, message.channel);
