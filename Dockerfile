@@ -1,7 +1,6 @@
 FROM node:8.6.0
-RUN apk update && \
-    apk upgrade && \
-    apk add git
+RUN apt-get update && \
+    apt-get upgrade
     
 # Create app directory
 RUN mkdir -p /usr/src/app
