@@ -191,7 +191,7 @@
                                         .then(function () {
                                             message.channel.sendMessage(user.toString() + " Stopped tracking players");
                                         }, function (err) {
-                                            console(err);
+                                            console.log(err);
                                         });
                                     break;
                                 default:
@@ -205,9 +205,13 @@
                     case "!help":
                         message.channel.sendMessage(user.toString() + "Commands: \n**!log** - Starts logging recent pp changes (Adds the server if it's not existent in the database)\n**!adduser [user]** - Adds a user to the logged user list of the channel\n**!removeuser [user]** - Removes the user from the logged users list\n**!gains** [user] - If the parameter [user] is defined, returns the gains of the [user], otherwise, returns the gains of all users in the channel\n**!track** - Starts logging the recent plays of all users in the tracking list\n**!addtrack [user]** - Adds a user to the tracking list\n**!stoptrack [user]** - Removes the user from the tracking list\n**!info** - Returns the global\/server information about the bot\n**!help** - Displays this message");
                         break;
-                    case "!swx":
-                        message.channel.sendMessage(user.toString() + " Ka wk :slight_smile:")
-
+                    case "!clean":
+                        playerManagement.deleteInactivePlayers(db)
+                            .then(function () {
+                                message.channel.sendMessage("Done");
+                            }, function (err) {
+                                console.log(err);
+                            })
                     default:
                     }
                 } catch (err) {

@@ -149,28 +149,7 @@
                         calculations.getChar(parseFloat(userObj.accuracy), parseFloat(obj.accuracy)) + Math.abs(parseFloat(accuracyChange)).toFixed(2) + "%** Accuracy**\n" +
                         (total.ppGained).toFixed(2) + '** pp this session **\n' +
                         total.rank + '** ranks this session');
-                    /*mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
-                        color: 3447003,
-                        author: {
-                            name: userObj.name,
-                            url: 'https://osu.ppy.sh/u/' + userObj._id,
-                            icon_url: 'http://s.ppy.sh/a/' + userObj._id
-                        },
-                        fields: [
-                            {
-                                name: ' ',
-                                value: calculations.getChar(userObj.pp, obj.pp_raw) + Math.abs(Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) + '** pp **\n' +
-                                    calculations.getChar(obj.pp_rank, userObj.rank) + Math.abs(Math.round(calculations.checkForChanges(userObj.rank, obj.pp_rank) * 100) / 100) + '** Ranks \n**' +
-                                    calculations.getChar(parseFloat(userObj.accuracy), parseFloat(obj.accuracy)) + Math.abs(parseFloat(accuracyChange)).toFixed(2) + "%** Accuracy**\n" +
-                                    (total.ppGained).toFixed(2) + '** pp this session **\n' + total.rank + '** ranks this session',
-                                inline: false
-                            }
-                        ]
-                    }}).then(function () {
 
-                    }, function(err) {
-                      console.log(err);
-                    })*/
                 }
             });
             if (i === userObj.serverId.length - 1 || userObj.serverId.length === 0) {
@@ -178,13 +157,5 @@
             }
         });
     };
-
-    /*module.exports.askRem = function (message, callback) {
-      bot.create(function (err, session) {
-        bot.ask(message, function (err, response) {
-            callback(response);
-        });
-      });
-    };*/
 
 }());

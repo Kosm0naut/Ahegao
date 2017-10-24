@@ -124,10 +124,10 @@
         });
     };
 
-    /*module.exports.deleteInactivePlayers = function (db) {
+    module.exports.deleteInactivePlayers = function (db) {
         return new Promise(function (fullfill, reject) {
             db.collection('user').deleteMany(
-                { "serverId" : {} 
+                { "serverId" : [] 
                 },
                 function (err, results) {
                     if (err) {
@@ -138,7 +138,7 @@
                 }
             )
         });
-    };*/
+    };
 
     module.exports.removePlayer = function (playerName, channel, db) {
         return new Promise(function (fullfill, reject) {
@@ -147,15 +147,12 @@
                     db.collection('user').deleteOne({"name": { $regex : new RegExp(playerName, "i") }}, function (err, result) {
                         if (err) {
                             reject(err);
-                            //channel.sendMessage("The user could not be removed from the database!");
                         } else if (result) {
-                            //channel.sendMessage("User '" + playerName + "' successfully removed from the database! ");
                             fullfill();
                         }
                     });
                 } else {
                     channel.sendMessage("The user **" + playerName + "** is not in the database!");
-                    //console.log("Could not remove user " + playerName + " because it does not exist in the database.");
                 }
             });
         });
