@@ -89,8 +89,6 @@
                     case "!adduser": //!adduser
                         /*global findPlayerName*/
                         playerManagement.findPlayerName(text, db, function (response) {
-                            console.log(text + " ");
-                            console.log(response);
                             if (response.length !== 0) {
                                 serverManagement.findServer(message.channel.id, db, function (server) {
                                     if (server !== 'undefined') {
