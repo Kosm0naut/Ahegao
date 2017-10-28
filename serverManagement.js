@@ -70,7 +70,7 @@
                         foundServerId = res[0].serverId[i];
                     }
                     if (foundServerId === channelId) {
-                        db.collection('user').update({"name": { $regex : new RegExp(playerName, "i") }}, { $pull: { "serverId": channelId}}, function (err, result) {
+                        db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $pull: { "serverId": channelId}}, function (err, result) {
                             if (err) {
                                 console.log("Error occured while deleting a server from the user. " + err);
                             } else if (result) {
@@ -92,7 +92,7 @@
         return new Promise(function (fullfill, reject) {
             playerManagement.findPlayerName(playerName, function (res) {
                 if (res.length !== 0) {
-                    db.collection('user').update({"name": { $regex : new RegExp(playerName, "i") }}, { $pull: { "trackedBy": serverId}}, function (err, result) {
+                    db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $pull: { "trackedBy": serverId}}, function (err, result) {
                         if (err) {
                             reject(err);
                         } else if (result) {
@@ -137,7 +137,7 @@
                     }
                 }
                 if (i === res[0].serverId.length && found === false) {
-                    db.collection('user').update({"name": { $regex : new RegExp(playerName, "i") }}, { $push: { "serverId": serverId } }, function (err, result) {
+                    db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $push: { "serverId": serverId } }, function (err, result) {
                         if (err) {
                             console.log("Error adding server to the user obj. " + err);
                         } else if (result) {

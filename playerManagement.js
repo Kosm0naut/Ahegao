@@ -70,7 +70,7 @@
     };
 
     module.exports.findPlayerName = function (userName, db, callback) {
-        db.collection('user').find({"name": { $regex : new RegExp(regExpEscape(userName), "i") }}).toArray(function (err, items) {
+        db.collection('user').find({"name": { $regex : new RegExp(playerManagement.regExpEscape(userName), "i") }}).toArray(function (err, items) {
             if (err) {
                 console.log("Error getting the server from the database. " + err);
             } else {
@@ -79,7 +79,7 @@
         });
     };
 
-    function regExpEscape(literal_string) {
+    module.exports.regExpEscape = function (literal_string) {
         return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
@@ -148,7 +148,7 @@
         return new Promise(function (fullfill, reject) {
             playerManagement.findPlayerName(playerName, function (res) {
                 if (res.length !== 0) {
-                    db.collection('user').deleteOne({"name": { $regex : new RegExp(playerName, "i") }}, function (err, result) {
+                    db.collection('user').deleteOne({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, function (err, result) {
                         if (err) {
                             reject(err);
                         } else if (result) {
@@ -275,17 +275,15 @@
                         }
                     }
                     if (i === res[0].trackedBy.length && found === false) {
-                        db.collection('user').update({"name": { $regex : new RegExp(playerName, "i") }}, { $push: { "trackedBy": serverId } }, function (err, result) {
+                        db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $push: { "trackedBy": serverId } }, function (err, result) {
                             if (err) {
                                 console.log(err);
                             } else if (result) {
-                                //channel.sendMessage("The user **" + playerName + "** was added to the tracking list!");
                                 fullfill(res);
                             }
                         });
                     } else {
                         reject();
-                        //channel.sendMessage("User already exists in the list.");
                     }
                 } else {
                     console.log("Error playerManagement.js line 275");
@@ -305,17 +303,15 @@
                         }
                     }
                     if (i === res[0].trackedBy.length && found === true) {
-                        db.collection('user').update({"name": { $regex : new RegExp(playerName, "i") }}, { $pull: { "trackedBy": serverId}}, function (err, result) {
+                        db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $pull: { "trackedBy": serverId}}, function (err, result) {
                             if (err) {
                                 console.log(err);
                             } else if (result) {
-                                //channel.sendMessage("Player **" + playerName + "** is no longer tracked.");
                                 fullfill(res);
                             }
                         });
                     } else {
                         reject();
-                    //channel.sendMessage("Player **" + playerName + "** does not exist in your guild!");
                     }
                 }
             });
