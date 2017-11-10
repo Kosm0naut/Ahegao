@@ -6,10 +6,11 @@ api:
   build: ../RenBotApi/
   ports: 
     - "3000:3000"
+  links:
+    - db
 web:
   build: .
   volumes:
     - .:/app
   links:
     - db
-    - api
