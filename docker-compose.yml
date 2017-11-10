@@ -2,11 +2,12 @@ db:
   image: mongo
   ports:
     - 27017
-  volumes:
-    - ./data:/data/db
+api:
+  build: ../RenBotApi/
 web:
   build: .
   volumes:
     - .:/app
   links:
     - db
+    - api
