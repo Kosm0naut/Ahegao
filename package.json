@@ -1,24 +1,24 @@
 {
-  "name": "ahegao",
+  "name": "RenBot",
   "version": "1.0.0",
   "description": "bot",
-  "main": "ahegao.js",
+  "main": "RenBot.js",
   "scripts": {
-    "start": "node Ahegao.js"
+    "start": "node RenBot.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kosm0naut/Ahegao.git"
+    "url": "git+https://github.com/Kosm0naut/RenBot.Core.git"
   },
   "keywords": [
-    "ahegao"
+    "RenBot.Core"
   ],
   "author": "Dom",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kosm0naut/Ahegao/issues"
+    "url": "https://github.com/Kosm0naut/RenBot.Core/issues"
   },
-  "homepage": "https://github.com/Kosm0naut/Ahegao#readme",
+  "homepage": "https://github.com/Kosm0naut/RenBot.Core#readme",
   "dependencies": {
     "cleverbot.io": "^1.0.4",
     "cron": "^1.1.1",
