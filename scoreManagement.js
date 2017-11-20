@@ -105,6 +105,7 @@
             return o2['pp'] === o1['pp']
         });
         if(topScore){
+            console.log("Calling back no 1");
             callback(topScore);
         }
     }
