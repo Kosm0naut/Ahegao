@@ -89,6 +89,7 @@
             } else {
                 scoreManagement.getNewScore(userObj, res, function(topScore) {
                     console.log("almost in the loop");
+                    console.log(topScore);
                     res.forEach(function (entry, i) {
                         console.log(i);
                         console.log(entry);
