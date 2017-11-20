@@ -13,7 +13,7 @@
     module.exports.gains = function (name, db, channel) {
         playerManagement.findPlayerName(name, db, function (items) {
             if (items.length !== 0) {
-                channel.sendMessage(" ", {embed: {
+                channel.send(" ", {embed: {
                     color: 3447003,
                     author: {
                         name: 'PP gains for ' + items[0].name,
@@ -36,7 +36,7 @@
                         console.log(e);
                     });
             } else {
-                channel.sendMessage("User was not found in the database");
+                channel.send("User was not found in the database");
             }
         });
     };
@@ -47,7 +47,7 @@
             if (err) {
                 console.log("Error retrieving user object: " + err);
             } else if (obj) {
-                channel.sendMessage(author.toString(), {embed: {
+                channel.send(author.toString(), {embed: {
                     color: 3447003,
                     author: {
                         name: obj.username,
@@ -122,9 +122,8 @@
     };
 
     module.exports.getInfo = function (channel, server, avgRequests) {
-        /*global toHHMMSS*/
         avgRequests.requestsTotal = calculations.getTotalRequests();
-        channel.sendMessage("**Global:** ```\nRequests per minute: " + parseFloat((avgRequests.requestsTotal / avgRequests.timeRunning) * 60).toFixed(2) + "\nTime running: " + calculations.toHHMMSS(avgRequests.timeRunning) + "\nRequests: " + avgRequests.requestsTotal + "```\n**Server:**\n```Is currently logging: " + server.botStarted + "\nIs currently tracking: " + server.trackStarted + "```");
+        channel.send("**Global:** ```\nRequests per minute: " + parseFloat((avgRequests.requestsTotal / avgRequests.timeRunning) * 60).toFixed(2) + "\nTime running: " + calculations.toHHMMSS(avgRequests.timeRunning) + "\nRequests: " + avgRequests.requestsTotal + "```\n**Server:**\n```Is currently logging: " + server.botStarted + "\nIs currently tracking: " + server.trackStarted + "```");
     };
 
 }());

@@ -26,55 +26,40 @@
                     user = message.author;
                 try {
                     switch (splitMessage[0]) {
-                    /*case mybot.user.toString():
-                        if (splitMessage[1] != null) {
-                            messageManagement.askRem(text, function (response) {
-                                if (response) {
-                                    message.channel.sendMessage(user.toString() + " " + response);
-                                }
-                            });
-                        } else {
-                            message.channel.sendMessage(user.toString() + "What is it?");
-                        }
-                        break;*/
                     case "!user": //!user
-                        /*global getUser*/
                         basicCommands.getUser(user, text, message.channel);
                         break;
                     case "!log": //!startbot
                         switch (serverStarted[0].botStarted) {
                         case false:
                             try {
-                                /*global updateServer*/
                                 serverManagement.updateServer(message.channel.id, true, db, function () {
-                                    message.channel.sendMessage(user.toString() + " User logging was started!");
+                                    message.channel.send(user.toString() + " User logging was started!");
                                 });
                             } catch (err) {
-                                /*global sendMessage*/
-                                message.channel.sendMessage(user.toString() + " The bot was not started due to an error!");
+                                /*global send*/
+                                message.channel.send(user.toString() + " The bot was not started due to an error!");
                                 console.log(err);
                             }
                             break;
                         case true:
                             try {
                                 serverManagement.updateServer(message.channel.id, false, db, function () {
-                                    message.channel.sendMessage(user.toString() + " User logging was stopped!");
+                                    message.channel.send(user.toString() + " User logging was stopped!");
                                 });
                             } catch (err) {
-                                message.channel.sendMessage(user.toString() + " Error, the bot was not stopped due to an error!");
+                                message.channel.send(user.toString() + " Error, the bot was not stopped due to an error!");
                                 console.log(err);
                             }
                             break;
                         default:
-                            message.channel.sendMessage(user.toString() + " Something went wrong, please message my owner about it");
+                            message.channel.send(user.toString() + " Something went wrong, please message my owner about it");
                         }
                         break;
                     case "!gains": //!gains
                         if (text !== '!gains') {
-                            /*global gains*/
                             basicCommands.gains(text, db, message.channel);
                         } else {
-                            /*global printPlayerList*/
                             playerManagement.printPlayerList(message.channel, db)
                                 .then(function (playersArr) {
                                     if (playersArr.length !== 0) {
@@ -82,22 +67,20 @@
                                         messageManagement.printGainsMessage(playersArr, message.channel);
                                     }
                                 }, function () {
-                                    message.channel.sendMessage(user.toString() + " No users were found in the database.");
+                                    message.channel.send(user.toString() + " No users were found in the database.");
                                 });
                         }
                         break;
                     case "!adduser": //!adduser
-                        /*global findPlayerName*/
                         playerManagement.findPlayerName(text, db, function (response) {
                             if (response.length !== 0) {
                                 serverManagement.findServer(message.channel.id, db, function (server) {
                                     if (server !== 'undefined') {
-                                        /*global addServerToPlayer*/
                                         serverManagement.addServerToPlayer(message.channel.id, text, message.channel, db, function () {
                                             console.log("Player " + text + " was added to another server.");
                                         });
                                     } else {
-                                        message.channel.sendMessage("The channel was not found in the database, add the channel using !log first.");
+                                        message.channel.send("The channel was not found in the database, add the channel using !log first.");
                                     }
                                 });
                             } else if (response.length === 0) {
@@ -112,19 +95,18 @@
                         });
                         break;
                     case "!removeuser": //!removeuser
-                    //check if server is in the database, if yes, remove it from the user object
                         try {
                             serverManagement.removeServerFromPlayer(message.channel.id, text, db)
                                 .then(function (res) {
-                                    message.channel.sendMessage(user.toString() + " Player **" + res[0].name + "** is no longer in the database.");
+                                    message.channel.send(user.toString() + " Player **" + res[0].name + "** is no longer in the database.");
                                 }, function () {
-                                    message.channel.sendMessage(user.toString() + " Player **" + text + "** does not exist in this channel!");
+                                    message.channel.send(user.toString() + " Player **" + text + "** does not exist in this channel!");
                                 })
                                 .catch(function (e) {
                                     console.log(e);
                                 });
                         } catch (err) {
-                            message.channel.sendMessage(user.toString() + " Error occured while removing the player from the list.");
+                            message.channel.send(user.toString() + " Error occured while removing the player from the list.");
                             console.log("Error occured while removing the player from the list." + err);
                         }
                         break;
@@ -132,44 +114,41 @@
                         basicCommands.getInfo(message.channel, serverStarted[0], avgRequests);
                         break;
                     case "!setMessage":
-                        /*global botSetGame*/
                         basicCommands.botSetGame(message.content, mybot.user)
                             .then(function (game) {
-                                message.channel.sendMessage(user.toString() + " Game set to: **" + game + "**");
+                                message.channel.send(user.toString() + " Game set to: **" + game + "**");
                             }, function (err) {
-                                message.channel.sendMessage(user.toString() + " Couldn't set the game.");
+                                message.channel.send(user.toString() + " Couldn't set the game.");
                                 console.log(err);
                             });
                         break;
                     case "!addtrack":
                         serverManagement.findServer(message.channel.id, db, function (server) {
                             if (server.length !== 0) {
-                                /*global startTrackingPlayer*/
                                 playerManagement.startTrackingPlayer(message.channel.id, text, db)
                                     .then(function (res) {
-                                        message.channel.sendMessage(user.toString() + " The user **" + res[0].name + "** was added to the tracking list!");
+                                        message.channel.send(user.toString() + " The user **" + res[0].name + "** was added to the tracking list!");
                                     }, function () {
-                                        message.channel.sendMessage(user.toString() + " The user **" + text + "** is already being tracked!");
+                                        message.channel.send(user.toString() + " The user **" + text + "** is already being tracked!");
                                     });
                             } else {
-                                message.channel.sendMessage(user.toString() + " The channel was not found in the database, add the channel using !log first.");
+                                message.channel.send(user.toString() + " The channel was not found in the database, add the channel using !log first.");
                             }
                         });
                         break;
                     case "!stoptrack":
                         serverManagement.findServer(message.channel.id, db, function (server) {
                             if (server.length !== 0) {
-                                /*global stopTrackingPlayer*/
                                 playerManagement.stopTrackingPlayer(message.channel.id, text, db)
                                     .then(function (res) {
-                                        message.channel.sendMessage(user.toString() + " Player **" + res[0].name + "** is no longer tracked.");
+                                        message.channel.send(user.toString() + " Player **" + res[0].name + "** is no longer tracked.");
                                     }, function () {
-                                        message.channel.sendMessage(user.toString() + " Player **" + text + "** doesn't exist in the database!");
+                                        message.channel.send(user.toString() + " Player **" + text + "** doesn't exist in the database!");
                                     }).catch(function (err) {
                                         console.log(err);
                                     });
                             } else {
-                                message.channel.sendMessage(user.toString() + " The channel was not found in the database, add the channel using !log first.");
+                                message.channel.send(user.toString() + " The channel was not found in the database, add the channel using !log first.");
                             }
                         });
                         break;
@@ -178,10 +157,9 @@
                             if (server.length !== 0) {
                                 switch (serverStarted[0].trackStarted) {
                                 case false:
-                                    /*global updateTrackInServer*/
                                     serverManagement.updateTrackInServer(message.channel.id, true, db)
                                         .then(function () {
-                                            message.channel.sendMessage(user.toString() + " Started tracking players");
+                                            message.channel.send(user.toString() + " Started tracking players");
                                         }, function (err) {
                                             console.log(err);
                                         });
@@ -189,26 +167,26 @@
                                 case true:
                                     serverManagement.updateTrackInServer(message.channel.id, false, db)
                                         .then(function () {
-                                            message.channel.sendMessage(user.toString() + " Stopped tracking players");
+                                            message.channel.send(user.toString() + " Stopped tracking players");
                                         }, function (err) {
                                             console.log(err);
                                         });
                                     break;
                                 default:
-                                    message.channel.sendMessage(user.toString() + " Something went wrong, please message my owner about it");
+                                    message.channel.send(user.toString() + " Something went wrong, please message my owner about it");
                                 }
                             } else {
-                                message.channel.sendMessage(user.toString() + " The channel was not found in the database, add the channel first.");
+                                message.channel.send(user.toString() + " The channel was not found in the database, add the channel first.");
                             }
                         });
                         break;
                     case "!help":
-                        message.channel.sendMessage(user.toString() + "Commands: \n**!log** - Starts logging recent pp changes (Adds the server if it's not existent in the database)\n**!adduser [user]** - Adds a user to the logged user list of the channel\n**!removeuser [user]** - Removes the user from the logged users list\n**!gains** [user] - If the parameter [user] is defined, returns the gains of the [user], otherwise, returns the gains of all users in the channel\n**!track** - Starts logging the recent plays of all users in the tracking list\n**!addtrack [user]** - Adds a user to the tracking list\n**!stoptrack [user]** - Removes the user from the tracking list\n**!info** - Returns the global\/server information about the bot\n**!help** - Displays this message");
+                        message.channel.send(user.toString() + "Commands: \n**!log** - Starts logging recent pp changes (Adds the server if it's not existent in the database)\n**!adduser [user]** - Adds a user to the logged user list of the channel\n**!removeuser [user]** - Removes the user from the logged users list\n**!gains** [user] - If the parameter [user] is defined, returns the gains of the [user], otherwise, returns the gains of all users in the channel\n**!track** - Starts logging the recent plays of all users in the tracking list\n**!addtrack [user]** - Adds a user to the tracking list\n**!stoptrack [user]** - Removes the user from the tracking list\n**!info** - Returns the global\/server information about the bot\n**!help** - Displays this message");
                         break;
                     case "!clean":
                         playerManagement.deleteInactivePlayers(db)
                             .then(function () {
-                                message.channel.sendMessage("Done");
+                                message.channel.send("Done");
                             }, function (err) {
                                 console.log(err);
                             })
@@ -217,12 +195,11 @@
                 } catch (err) {
                     console.log(err);
                     if (err !== "TypeError: Cannot read property \'botStarted\' of undefined") {
-                        /*global addServer*/
                         serverManagement.addServer(message, db, function () {
                             console.log(user.toString() + " New server added to the database.");
                         });
                     } else {
-                        message.channel.sendMessage(user.toString() + " Error! Something went wrong.. Please message my owner with all the mean things you did to me.");
+                        message.channel.send(user.toString() + " Error! Something went wrong.. Please message my owner with all the mean things you did to me.");
                         console.log(err);
                     }
                 }

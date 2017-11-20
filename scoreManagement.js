@@ -50,7 +50,7 @@
                             scoreManagement.retrieveMostRecent(res[i], getRecentScoresCallback());
                         }
                     } else {
-                        channel.sendMessage("No users were found for this channel.");
+                        channel.send("No users were found for this channel.");
                     }
                 }).catch(function (err) {
                     reject(err);

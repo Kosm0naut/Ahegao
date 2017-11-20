@@ -21,7 +21,8 @@
                 user.trackedBy.forEach(function (trackedBy, i) {
                     serverManagement.findServer(trackedBy, db, function (item) {
                         if (item[0].trackStarted) {
-                            mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
+                            console.log(mybot.channels.get(item[0]._id));
+                            mybot.channels.get(item[0]._id).send(" ", {embed: {
                                 color: 3447003,
                                 author: {
                                     name: user.name,
@@ -62,6 +63,7 @@
                         }
                     });
                     if (i === user.trackedBy.length - 1 || user.trackedBy.length === 0) {
+                        console.log("Sent a top score message for: " + user.name);
                         callback();
                     }
                 });
@@ -75,7 +77,7 @@
                     userObj.serverId.forEach(function (serverId, i) {
                         serverManagement.findServer(serverId, db, function (item) {
                             if (item[0].botStarted) {
-                                mybot.channels.get(item[0]._id).sendMessage(" ", {embed: {
+                                mybot.channels.get(item[0]._id).send(" ", {embed: {
                                     color: 3447003,
                                     author: {
                                         name: userObj.name,
@@ -124,7 +126,7 @@
     };
 
     module.exports.printGainsMessage = function (arr, channel) {
-        channel.sendMessage(" ", {embed: {
+        channel.send(" ", {embed: {
             color: 3447003,
             author: {
                 name: 'PP totals for ' + channel.name,
@@ -143,7 +145,7 @@
             serverManagement.findServer(server, db, function (item) {
                 if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 1)) {
                     /*global getChar*/
-                    mybot.channels.get(item[0]._id).sendMessage("**" + userObj.name +
+                    mybot.channels.get(item[0]._id).send("**" + userObj.name +
                         '**:\n**' + calculations.getChar(userObj.pp, obj.pp_raw) + Math.abs(Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) + '** pp **\n' +
                         calculations.getChar(obj.pp_rank, userObj.rank) + Math.abs(Math.round(calculations.checkForChanges(userObj.rank, obj.pp_rank) * 100) / 100) + '** Ranks \n**' +
                         calculations.getChar(parseFloat(userObj.accuracy), parseFloat(obj.accuracy)) + Math.abs(parseFloat(accuracyChange)).toFixed(2) + "%** Accuracy**\n" +

@@ -16,7 +16,7 @@
             if (err) {
                 console.log("Error pushing data :" + err);
             } else if (result) {
-                message.channel.sendMessage("Server instance was not found, so " +  message.channel + " was added to the database!");
+                message.channel.send("Server instance was not found, so " +  message.channel + " was added to the database!");
                 callback();
             }
         });
@@ -74,7 +74,6 @@
                             if (err) {
                                 console.log("Error occured while deleting a server from the user. " + err);
                             } else if (result) {
-                                //  mybot.sendMessage(message, "Player **" + playerName + "** is no longer in the database.");
                                 fullfill(res);
                             }
                         });
@@ -96,12 +95,12 @@
                         if (err) {
                             reject(err);
                         } else if (result) {
-                            serverId.sendMessage("Player **" + playerName + "** is no longer tracked.");
+                            serverId.send("Player **" + playerName + "** is no longer tracked.");
                             fullfill(result);
                         }
                     });
                 } else {
-                    serverId.sendMessage("Player **" + playerName + "** does not exist in your guild!");
+                    serverId.send("Player **" + playerName + "** does not exist in your guild!");
                 }
             });
         });
@@ -141,16 +140,15 @@
                         if (err) {
                             console.log("Error adding server to the user obj. " + err);
                         } else if (result) {
-                            console.log("Added a new user " + playerName + " to the database.");
-                            channel.sendMessage("The user **" + playerName + "** was added to the database!");
+                            channel.send("The user **" + playerName + "** was added to the database!");
                             callback();
                         }
                     });
                 } else {
-                    channel.sendMessage("User already exists.");
+                    channel.send("User already exists.");
                 }
             } else {
-                channel.sendMessage("User doesn't exist in the database");
+                channel.send("User doesn't exist in the database");
             }
         });
     };

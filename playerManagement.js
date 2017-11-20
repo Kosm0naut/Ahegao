@@ -37,11 +37,8 @@
                 topScores: []
             };
         return new Promise(function (fullfill, reject) {
-            /*global setUser*/
             playerFormation.setUser(id, message, newUser, osu, function () {
-                /*global setRecentScores*/
                 playerFormation.setRecentScores(id, newUser, osu, function () {
-                    /*global getTopScores*/
                     playerFormation.getTopScores(id, osu)
                         .then(function (entry) {
                             newUser.topScores = entry;
@@ -49,7 +46,7 @@
                                 if (err) {
                                     reject(err);
                                 } else if (result) {
-                                    message.sendMessage("The user **" + newUser.name + "** was added to the database!");
+                                    message.send("The user **" + newUser.name + "** was added to the database!");
                                     fullfill(result);
                                 }
                             });
@@ -156,7 +153,7 @@
                         }
                     });
                 } else {
-                    channel.sendMessage("The user **" + playerName + "** is not in the database!");
+                    channel.send("The user **" + playerName + "** is not in the database!");
                 }
             });
         });
