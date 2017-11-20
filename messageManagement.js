@@ -71,6 +71,7 @@
     };
 
     module.exports.printTopScoresUpdate = function (mybot, osu, db, userObj, score, index, callback) {
+        console.log(score);
         beatmapManagement.getBeatmapset(score.beatmap_id, osu)
             .then(function (beatmapsetId) {
                 beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
@@ -146,7 +147,6 @@
         userObj.serverId.forEach(function (server, i) {
             serverManagement.findServer(server, db, function (item) {
                 if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 1)) {
-                    /*global getChar*/
                     mybot.channels.get(item[0]._id).send("**" + userObj.name +
                         '**:\n**' + calculations.getChar(userObj.pp, obj.pp_raw) + Math.abs(Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) + '** pp **\n' +
                         calculations.getChar(obj.pp_rank, userObj.rank) + Math.abs(Math.round(calculations.checkForChanges(userObj.rank, obj.pp_rank) * 100) / 100) + '** Ranks \n**' +
