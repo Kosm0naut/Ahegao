@@ -46,7 +46,6 @@
                   .then(function (res) {
                     if (res.length !== 0) {
                         for (i; i < res.length; i++) {
-                            /*global retrieveMostRecent*/
                             scoreManagement.retrieveMostRecent(res[i], getRecentScoresCallback());
                         }
                     } else {
@@ -140,7 +139,9 @@
         calculations.totalRequestsIncrement();
         osu.getUserRecent(user._id, function (err, obj) {
             if (err) {
-                console.log("Error scoreManagement.js line 143: " + err);
+                if (err != "Error: Could not parse json"){
+                   console.log("Error scoreManagement.js line 143: " + err);
+                }
             } else if (obj) {
                 try {
                     if (Object.keys(obj).length !== 0) {

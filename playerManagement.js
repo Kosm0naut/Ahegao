@@ -223,7 +223,7 @@
                     total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
-                            console.log(score);
+                            console.log(score + " " + i);
                             console.log("Printing top score update");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 console.log("Finished printing top score update")
@@ -238,7 +238,6 @@
                                             });
                                         });
                                     });
-                              //  });
                             });
                         } else {
                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
