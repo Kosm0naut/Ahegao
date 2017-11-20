@@ -58,7 +58,6 @@
                         }
                     });
                     if (i === user.trackedBy.length - 1 || user.trackedBy.length === 0) {
-                        console.log("Sent a top score message for: " + user.name);
                         callback();
                     }
                 });
@@ -72,7 +71,6 @@
                     userObj.serverId.forEach(function (serverId, i) {
                         serverManagement.findServer(serverId, db, function (item) {
                             if (item[0].botStarted) {
-                                console.log("Found a new top score");
                                 mybot.channels.get(item[0]._id).send(" ", {embed: {
                                     color: 3447003,
                                     author: {
@@ -115,7 +113,6 @@
                         });
                         if (i === userObj.serverId.length - 1 || userObj.serverId.length === 0) {
                             callback();
-                            console.log("Calling back");
                         }
                     });
                 });

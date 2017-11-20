@@ -66,7 +66,7 @@ function botStart() {
             items.forEach(function (entry) {
                 scoreManagement.retrieveMostRecent(entry, osu, db, mybot, function () {
                     playerManagement.getUserUpdate(mybot, entry, db, function () {
-                        console.log("Done updating user " + entry.name);
+                        //console.log("Done updating user " + entry.name);
                     });
                 });
             });
