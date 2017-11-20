@@ -90,6 +90,8 @@
                 scoreManagement.getNewScore(userObj, res, function(topScore) {
                     console.log("almost in the loop");
                     res.forEach(function (entry, i) {
+                        console.log(i);
+                        console.log(entry);
                         if(entry.beatmap_id === topScore.beatmap_id) {
                             console.log("Calling back for submission");
                             callback(topScore, i, res);
