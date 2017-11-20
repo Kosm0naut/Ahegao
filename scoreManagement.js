@@ -107,8 +107,9 @@
         var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
             return o2['pp'] === o1['pp']
         });
-        if(topScore){
-            console.log("Calling back no 1");
+        if(topScore.length > 0){
+            console.log(topScore);
+            console.log("------------------------");
             callback(topScore);
         }
     }
