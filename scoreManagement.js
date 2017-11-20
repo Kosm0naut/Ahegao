@@ -102,7 +102,7 @@
         var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
             return o2['pp'] === o1['pp']
         });
-        callback(topscore);
+        callback(topScore);
     }
 
     module.exports.updateTopScores = function (newTopScores) {
