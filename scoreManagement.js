@@ -91,8 +91,8 @@
                     console.log("almost in the loop");
                     console.log(topScore);
                     res.forEach(function (entry, i) {
-                        console.log(i);
-                        console.log(entry);
+                        console.log(i + entry.beatmap_id);
+                        console.log(topScore.beatmap_id);
                         if(entry.beatmap_id === topScore.beatmap_id) {
                             console.log("Calling back for submission");
                             callback(topScore, i, res);
@@ -108,8 +108,6 @@
             return o2['pp'] === o1['pp']
         });
         if(topScore.length > 0){
-            console.log(topScore);
-            console.log("------------------------");
             callback(topScore);
         }
     }
