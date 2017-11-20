@@ -9,10 +9,7 @@
         serverManagement = require('./serverManagement'),
         beatmapManagement = require('./beatmapManagement'),
         messageManagement = require('./messageManagement'),
-        dotenv = require('dotenv').config(),
-        bot = new cleverbot(process.env.cleverBotApiUser, process.env.cleverBotApiKey),
-        botSession='supersecretrembotchat';
-    bot.setNick(botSession);
+        dotenv = require('dotenv').config();
 
     module.exports.sendRecentUpdate = function (mybot, user, obj, bMap, calculatedAcc, db, osu, callback) {
         beatmapManagement.getBeatmapset(obj[0].beatmap_id, osu)
