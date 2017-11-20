@@ -59,7 +59,7 @@
         });
     };
 
-    module.exports.checkTopScores = function (userObj, osu, callback) {
+    /*module.exports.checkTopScores = function (userObj, osu, callback) {
         var array = [], index = [];
         calculations.totalRequestsIncrement();
         osu.getUserBest(userObj._id, function (err, res) {
@@ -79,7 +79,7 @@
                 });
             }
         });
-    };
+    };*/
 
     module.exports.checkTopScores = function (userObj, osu, callback) {
         calculations.totalRequestsIncrement();
@@ -87,12 +87,22 @@
             if(err) {
                 console.log(err);
             } else {
-                var topScores = _.differenceWith(userObj.topScores, res, function (o1, o2) {
-                    return o1['pp'] === o2['pp']
+                scoreManagement.getNewScore(userObj, res, function(topScore) {
+                    res.forEach(function (entry, i) {
+                        if(entry.beatmap_id === topScore) {
+                            callback(topScore, i, res);
+                        }
+                    });
                 });
-                console.log(topScores);
             }
         });
+    }
+
+    module.exports.getNewScore = function (userObj, res, callback) {
+        var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
+            return o2['pp'] === o1['pp']
+        });
+        callback(topscore);
     }
 
     module.exports.updateTopScores = function (newTopScores) {
