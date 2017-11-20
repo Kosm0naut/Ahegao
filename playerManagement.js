@@ -223,6 +223,7 @@
                     total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
+                            console.log(score);
                             console.log("Printing top score update");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 console.log("Finished printing top score update")

@@ -77,7 +77,7 @@
                     userObj.serverId.forEach(function (serverId, i) {
                         serverManagement.findServer(serverId, db, function (item) {
                             if (item[0].botStarted) {
-                                console.log(mybot.channels.get(item[0]._id));
+                                console.log("Found a new top score");
                                 mybot.channels.get(item[0]._id).send(" ", {embed: {
                                     color: 3447003,
                                     author: {
