@@ -225,7 +225,7 @@
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
                             console.log("first brackets");
-                            console.log(score + " " + i);
+                            console.log(score + " " + index);
                             console.log("Printing top score update");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 console.log("Finished printing top score update")
