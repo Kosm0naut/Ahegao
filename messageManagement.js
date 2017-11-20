@@ -9,7 +9,6 @@
         serverManagement = require('./serverManagement'),
         beatmapManagement = require('./beatmapManagement'),
         messageManagement = require('./messageManagement'),
-        cleverbot = require('cleverbot.io'),
         dotenv = require('dotenv').config(),
         bot = new cleverbot(process.env.cleverBotApiUser, process.env.cleverBotApiKey),
         botSession='supersecretrembotchat';

@@ -82,7 +82,6 @@
             recentScore.count50 = obj[0].count50;
             recentScore.date = obj[0].date;
             recentScore.mapRank = obj[0].rank;
-            /*global getMod*/
             recentScore.mapMods = getMod(obj[0].enabled_mods);
             if (Object.keys(recentScore).length !== 0) {
                 fullfill(recentScore);
