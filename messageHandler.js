@@ -84,7 +84,6 @@
                                     }
                                 });
                             } else if (response.length === 0) {
-                                /*global addPlayer*/
                                 playerManagement.addPlayer(text, message.channel, db)
                                     .then(function () {
                                         console.log("Player " + text + " was added.");

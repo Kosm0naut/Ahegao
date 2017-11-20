@@ -217,25 +217,19 @@
             if (err) {
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
-                /*global checkForChanges*/
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
-                    /*global getAccuracyChange*/
                     accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
                     total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
                     total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
-                            /*global printTopScoresUpdate*/
+                            console.log("Printing top score update");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
-                                /*global updateTopScores*/
-                                //scoreManagement.updateTopScores(topScores, function (topScoreArr) {
+                                console.log("Finished printing top score update")
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
-                                        /*global pushTopScores*/
                                         scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
-                                            /*global printUpdateMessage*/
                                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
-                                                /*global updatePlayerStats*/
                                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                     .then(function () {
                                                         callback();
