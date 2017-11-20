@@ -66,11 +66,9 @@
     };
 
     module.exports.printTopScoresUpdate = function (mybot, osu, db, userObj, score, index, callback) {
-        console.log(score[0].pp);
-        console.log(parseFloat(calculations.getAcc(score[0].count300, score[0].count100, score[0].count50, score[0].countmiss)).toFixed(2) + " % (**" + score[0].rank + "**)");
-        beatmapManagement.getBeatmapset(score.beatmap_id, osu)
+        beatmapManagement.getBeatmapset(score[0].beatmap_id, osu)
             .then(function (beatmapsetId) {
-                beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
+                beatmapManagement.getBeatmapData(score[0].beatmap_id, osu, function (obj) {
                     userObj.serverId.forEach(function (serverId, i) {
                         serverManagement.findServer(serverId, db, function (item) {
                             if (item[0].botStarted) {
@@ -88,17 +86,17 @@
                                     fields: [
                                         {
                                             name: 'New top score **#' + (index + 1) + '**:',
-                                            value: '[' + obj.artist + " - " + obj.title + " [" + obj.diff + "]](https://osu.ppy.sh/b/" + score.beatmap_id + ')',
+                                            value: '[' + obj.artist + " - " + obj.title + " [" + obj.diff + "]](https://osu.ppy.sh/b/" + score[0].beatmap_id + ')',
                                             inline: false
                                         },
                                         {
                                             name: '**Combo **',
-                                            value: score.maxcombo + 'x ' + score.countmiss + ' misses',
+                                            value: score[0].maxcombo + 'x ' + score[0].countmiss + ' misses',
                                             inline: true
                                         },
                                         {
                                             name: "**Mods **",
-                                            value: calculations.getMod(score.enabled_mods).toString(),
+                                            value: calculations.getMod(score[0].enabled_mods).toString(),
                                             inline: true
                                         },
                                         {

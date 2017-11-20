@@ -218,13 +218,11 @@
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
-                    console.log("1");
                     accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
                     total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
                     total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
-                            console.log("First brackets");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
@@ -239,7 +237,6 @@
                                     });
                             });
                         } else {
-                            console.log("second brackets");
                             messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
                                 playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                     .then(function (response) {

@@ -115,7 +115,6 @@
               arr.push(scoreManagement.formTopScore(topScore.beatmap_id, topScore.count300, topScore.count100, topScore.count50, topScore.countmiss, calculations.getMod(topScore.enabled_mods), topScore.rank, topScore.date, topScore.pp));
               if (index === newTopScores.length-1 ) {
                   fullfill(arr);
-                  console.log(arr);
               }
           });
         });
