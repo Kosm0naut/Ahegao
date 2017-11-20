@@ -66,7 +66,8 @@
     };
 
     module.exports.printTopScoresUpdate = function (mybot, osu, db, userObj, score, index, callback) {
-        console.log(score);
+        console.log(score.pp);
+        console.log(parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) + " % (**" + score.rank + "**)");
         beatmapManagement.getBeatmapset(score.beatmap_id, osu)
             .then(function (beatmapsetId) {
                 beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
