@@ -93,7 +93,7 @@
                     res.forEach(function (entry, i) {
                         console.log(i + entry.beatmap_id);
                         console.log(topScore.beatmap_id);
-                        if(entry.beatmap_id === topScore.beatmap_id) {
+                        if(entry.beatmap_id === topScore[0].beatmap_id) {
                             console.log("Calling back for submission");
                             callback(topScore, i, res);
                         }
