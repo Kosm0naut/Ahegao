@@ -70,7 +70,7 @@
                         if (i === j && (scoresEntry.date !== entry.date)) {
                             array.push(entry);
                             index.push(i);
-                            if(i === res.length - 1) {
+                            if(j === res.length - 1) {
                                 callback(array[0], index[0], res);
                             }
                         }
