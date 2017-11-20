@@ -21,7 +21,6 @@
                 user.trackedBy.forEach(function (trackedBy, i) {
                     serverManagement.findServer(trackedBy, db, function (item) {
                         if (item[0].trackStarted) {
-                            console.log(mybot.channels.get(item[0]._id));
                             mybot.channels.get(item[0]._id).send(" ", {embed: {
                                 color: 3447003,
                                 author: {
