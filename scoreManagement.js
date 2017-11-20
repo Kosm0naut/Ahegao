@@ -88,8 +88,10 @@
                 console.log(err);
             } else {
                 scoreManagement.getNewScore(userObj, res, function(topScore) {
+                    console.log("almost in the loop");
                     res.forEach(function (entry, i) {
                         if(entry.beatmap_id === topScore) {
+                            console.log("Calling back for submission");
                             callback(topScore, i, res);
                         }
                     });
@@ -102,7 +104,9 @@
         var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
             return o2['pp'] === o1['pp']
         });
-        callback(topScore);
+        if(topScore){
+            callback(topScore);
+        }
     }
 
     module.exports.updateTopScores = function (newTopScores) {
