@@ -91,7 +91,7 @@ function main() {
         if (!started) {
             console.log('I am ready!');
             started = true;
-            basicCommands.botSetGame("a Renyan WanWan", mybot.user)
+            basicCommands.botSetGame(`on ${client.guilds.size} servers`, mybot.user);
                 .then(function () {
                     messageHandler.onMessage(mybot, db);
                 }, function () {
