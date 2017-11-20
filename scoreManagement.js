@@ -70,12 +70,12 @@
                         if (i === j && (scoresEntry.date !== entry.date)) {
                             array.push(entry);
                             index.push(i);
+                            if(i === res.length - 1) {
+                                callback(array[0], index[0], res);
+                            }
                         }
                     });
                 });
-                if(i > 10) {
-                    callback(array[0], index[0], res);
-                }
             }
         });
     };
