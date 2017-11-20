@@ -224,12 +224,8 @@
                     total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
                     scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                         if (score !== undefined) {
-                            console.log("first brackets");
-                            console.log(score + " " + index);
-                            console.log("Printing top score update");
+                            console.log("First brackets");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
-                                console.log("Finished printing top score update")
-                                console.log(topScores)
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
                                         scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
