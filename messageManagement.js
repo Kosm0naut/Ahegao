@@ -66,8 +66,8 @@
     };
 
     module.exports.printTopScoresUpdate = function (mybot, osu, db, userObj, score, index, callback) {
-        console.log(score.pp);
-        console.log(parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) + " % (**" + score.rank + "**)");
+        console.log(score[0].pp);
+        console.log(parseFloat(calculations.getAcc(score[0].count300, score[0].count100, score[0].count50, score[0].countmiss)).toFixed(2) + " % (**" + score[0].rank + "**)");
         beatmapManagement.getBeatmapset(score.beatmap_id, osu)
             .then(function (beatmapsetId) {
                 beatmapManagement.getBeatmapData(score.beatmap_id, osu, function (obj) {
@@ -103,12 +103,12 @@
                                         },
                                         {
                                             name: "**Accuracy **",
-                                            value: parseFloat(calculations.getAcc(score.count300, score.count100, score.count50, score.countmiss)).toFixed(2) + " % (**" + score.rank + "**)",
+                                            value: parseFloat(calculations.getAcc(score[0].count300, score[0].count100, score[0].count50, score[0].countmiss)).toFixed(2) + " % (**" + score[0].rank + "**)",
                                             inline: true
                                         },
                                         {
                                             name: "**Weighted **",
-                                            value: score.pp,
+                                            value: score[0].pp,
                                             inline: true
                                         }
                                     ]
