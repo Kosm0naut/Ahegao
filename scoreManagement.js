@@ -8,6 +8,7 @@
         scoreManagement = require('./scoreManagement'),
         beatmapManagement = require('./beatmapManagement.js'),
         messageManagement = require('./messageManagement.js'),
+        _ = require('lodash/array'),
         getRecentScoresCallback = function () {
             return function () {
                 console.log("Getting user recent scores");
@@ -70,7 +71,7 @@
                         if (i === j && (scoresEntry.date !== entry.date)) {
                             array.push(entry);
                             index.push(i);
-                            if(j === res.length - 1) {
+                            if(i === res.length - 1) {
                                 callback(array[0], index[0], res);
                             }
                         }
@@ -79,6 +80,20 @@
             }
         });
     };
+
+    module.exports.checkTopScores = function (userObj, osu, callback) {
+        calculations.totalRequestsIncrement();
+        osu.getUserBest(userObj._id, function (err, res) {
+            if(err) {
+                console.log(err);
+            } else {
+                var topScores = _.differenceWith(userObj.topScores, res, function (o1, o2) {
+                    return o1['pp'] === o2['pp']
+                });
+                console.log(topScores);
+            }
+        });
+    }
 
     module.exports.updateTopScores = function (newTopScores) {
         var arr = [];

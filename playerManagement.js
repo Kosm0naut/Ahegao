@@ -229,6 +229,7 @@
                             console.log("Printing top score update");
                             messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                 console.log("Finished printing top score update")
+                                console.log(topScores)
                                 scoreManagement.updateTopScores(topScores)
                                     .then(function (topScoreArr) {
                                         scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
