@@ -91,7 +91,7 @@ function main() {
         if (!started) {
             console.log('I am ready!');
             started = true;
-            basicCommands.botSetGame(`on ${client.guilds.size} servers`, mybot.user)
+            basicCommands.botSetGame(`on ${mybot.guilds.size} servers`, mybot.user)
                 .then(function () {
                     messageHandler.onMessage(mybot, db);
                 }, function () {
