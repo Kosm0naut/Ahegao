@@ -89,7 +89,7 @@
             } else {
                 console.log("here");
                 scoreManagement.getNewScore(userObj, res, function(topScore, index) {
-                    if(index > 0) {
+                    if(index >= 0) {
                         callback(topScore, index, res);
                     } else {
                         callback('undefined', index, res);
@@ -113,8 +113,10 @@
         res.forEach(function (entry, i) {
             userObj.topScores.forEach(function (scoresEntry, j) {
                 if (i === j && (scoresEntry.date !== entry.date)) {
+                    console.log("Top score");
                     callback(entry, i);
                 } else if (i === res.length-1 && j === scoresEntry.length-1) {
+                    console.log("No top score");
                     callback('undefined', -1);
                 }
             });
