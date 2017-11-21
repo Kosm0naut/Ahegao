@@ -135,7 +135,6 @@
     };
 
     module.exports.printUpdateMessage = function (mybot, userObj, obj, accuracyChange, total, db, callback) {
-        console.log(calculations.getChar(parseFloat(userObj.accuracy), parseFloat(obj.accuracy)));
         userObj.serverId.forEach(function (server, i) {
             serverManagement.findServer(server, db, function (item) {
                 if (item[0].botStarted && ((Math.round(calculations.checkForChanges(userObj.pp, obj.pp_raw) * 100) / 100) > 1)) {
