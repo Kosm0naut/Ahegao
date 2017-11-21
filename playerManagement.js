@@ -218,7 +218,7 @@
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
-                    playerManagement.calculatePPChanges(total, userObj, obj, function (){
+                    playerManagement.calculatePPChanges(accuracyChange, total, userObj, obj, function (){
                         scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                             if (score !== undefined) {
                                 console.log("1");
@@ -256,7 +256,7 @@
         });
     };
 
-    module.exports.calculatePPChanges = function (total, userObj, obj, callback) {
+    module.exports.calculatePPChanges = function (accuracyChange, total, userObj, obj, callback) {
         accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
         total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
         total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
