@@ -89,28 +89,30 @@
             } else {
                 console.log("here");
                 scoreManagement.getNewScore(userObj, res, function(topScore, index) {
-                    if(index >= 0) {
-                        callback(topScore, index, res);
-                    } else {
-                        callback('undefined', index, res);
-                    }
+                    callback(topScore, index, res);
                 });
             }
         });
     }
 
     module.exports.getNewScore = function (userObj, res, callback) {
+        var obj = {
+            array: [],
+            index: []
+        };
         res.forEach(function (entry, i) {
             userObj.topScores.forEach(function (scoresEntry, j) {
                 console.log("Bandom");
                 if (i === j && (scoresEntry.date !== entry.date)) {
                     console.log("Top score");
-                    callback(entry, i);
-                } else if (i === res.length-1 && j === scoresEntry.length-1) {
-                    console.log("No top score");
-                    callback('undefined', -1);
+                    obj.array.push(entry);
+                    obj.index.push(i);
                 }
             });
+
+            if (i === res.length-1) {
+                callback(obj.array[0], obj.index[0]);
+            }
         });
     }
 
