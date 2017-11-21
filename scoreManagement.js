@@ -89,7 +89,8 @@
             } else {
                 scoreManagement.getNewScore(userObj, res, function(topScore) {
                     res.forEach(function (entry, i) {
-                        if(entry.beatmap_id === topScore[0].beatmap_id) {
+                        if(entry.beatmap_id === topScore[0].beatmap_id || i === res.length) {
+                            console.log(topScore)
                             callback(topScore, i, res);
                         }
                     });
