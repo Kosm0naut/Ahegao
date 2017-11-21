@@ -87,7 +87,6 @@
             if(err) {
                 console.log(err);
             } else {
-                console.log("here");
                 scoreManagement.getNewScore(userObj, res, function(topScore, index) {
                     callback(topScore, index, res);
                 });
@@ -102,9 +101,7 @@
         };
         res.forEach(function (entry, i) {
             userObj.topScores.forEach(function (scoresEntry, j) {
-                console.log("Bandom");
                 if (i === j && (scoresEntry.date !== entry.date)) {
-                    console.log("Top score");
                     obj.array.push(entry);
                     obj.index.push(i);
                 }
