@@ -220,7 +220,7 @@
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
                     playerManagement.calculatePPChanges(accuracyChange, total, userObj, obj, function (){
                         scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
-                            if (score !== undefined) {
+                            if (score !== 'undefined') {
                                 console.log("1");
                                 console.log(score);
                                 console.log(index);
