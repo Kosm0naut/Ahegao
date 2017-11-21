@@ -206,8 +206,6 @@
     };
 
     module.exports.getUserUpdate = function (mybot, userObj, db, callback) {
-        total.ppGained = parseFloat(userObj.totalpp);
-        total.rank = userObj.totalrank;
         calculations.totalRequestsIncrement();
         osu.getUser(userObj.name, 1, function (err, obj) {
             if (err) {
@@ -252,6 +250,9 @@
             ppGained: 0,
             rank: 0
         }, accuracyChange;
+        total.ppGained = parseFloat(userObj.totalpp);
+        total.rank = userObj.totalrank;
+        
         accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
         total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
         total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
