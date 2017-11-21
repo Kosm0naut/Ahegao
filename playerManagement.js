@@ -206,10 +206,6 @@
     };
 
     module.exports.getUserUpdate = function (mybot, userObj, db, callback) {
-        var total = {
-            ppGained: 0,
-            rank: 0
-        }, accuracyChange;
         total.ppGained = parseFloat(userObj.totalpp);
         total.rank = userObj.totalrank;
         calculations.totalRequestsIncrement();
@@ -218,7 +214,7 @@
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
-                    playerManagement.calculatePPChanges(accuracyChange, total, userObj, obj, function (){
+                    playerManagement.calculatePPChanges(userObj, obj, function (accuracyChange, total){
                         scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                             if (score !== undefined) {
                                 messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
@@ -251,13 +247,17 @@
         });
     };
 
-    module.exports.calculatePPChanges = function (accuracyChange, total, userObj, obj, callback) {
+    module.exports.calculatePPChanges = function (userObj, obj, callback) {
+        var total = {
+            ppGained: 0,
+            rank: 0
+        }, accuracyChange;
         accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
         total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
         total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
 
         if(accuracyChange && total.ppGained && total.rank) {
-            callback(accuracyChange, total.ppGained, total.rank);
+            callback(accuracyChange, total);
         }
     };
 
