@@ -99,19 +99,10 @@
         });
     }
 
-    /*module.exports.getNewScore = function (userObj, res, callback) {
-        var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
-            return o2['pp'] === o1['pp']
-        });
-        if(topScore.length > 0 || ){
-            console.log("going further");
-            callback(topScore);
-        }
-    }*/
-
     module.exports.getNewScore = function (userObj, res, callback) {
         res.forEach(function (entry, i) {
             userObj.topScores.forEach(function (scoresEntry, j) {
+                console.log("Bandom");
                 if (i === j && (scoresEntry.date !== entry.date)) {
                     console.log("Top score");
                     callback(entry, i);
