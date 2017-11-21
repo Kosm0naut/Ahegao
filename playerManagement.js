@@ -218,38 +218,51 @@
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
-                    accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
-                    total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
-                    total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
-                    scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
-                        if (score !== undefined) {
-                            messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
-                                scoreManagement.updateTopScores(topScores)
-                                    .then(function (topScoreArr) {
-                                        scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
-                                            messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
-                                                playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
-                                                    .then(function () {
-                                                        callback();
-                                                    });
+                    playerManagement.calculatePPChanges(total, userObj, obj, function (){
+                        scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
+                            if (score !== undefined) {
+                                console.log("1");
+                                console.log(score);
+                                messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
+                                    scoreManagement.updateTopScores(topScores)
+                                        .then(function (topScoreArr) {
+                                            scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
+                                                messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                                    playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
+                                                        .then(function () {
+                                                            callback();
+                                                        });
+                                                });
                                             });
                                         });
-                                    });
-                            });
-                        } else {
-                            messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
-                                playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
-                                    .then(function (response) {
-                                        callback();
-                                    }, function (err) {
-                                      console.log("Error playerManagement.js line 241: " + err);
-                                    });
-                            });
-                        }
+                                });
+                            } else {
+                                console.log("2");
+                                console.log(score);
+                                messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                    playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
+                                        .then(function (response) {
+                                            callback();
+                                        }, function (err) {
+                                        console.log("Error playerManagement.js line 241: " + err);
+                                        });
+                                });
+                            }
+                        });
                     });
                 }
             }
         });
+    };
+
+    module.exports.calculatePPChanges = function (total, userObj, obj, callback) {
+        accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
+        total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
+        total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
+
+        if(accuracyChange && total.ppGained && total.rank) {
+            callback(accuracyChange, total.ppGained, total.rank);
+        }
     };
 
     module.exports.startTrackingPlayer = function (serverId, playerName, db) {
