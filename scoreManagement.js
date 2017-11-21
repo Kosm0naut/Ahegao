@@ -88,29 +88,42 @@
                 console.log(err);
             } else {
                 console.log("here");
-                scoreManagement.getNewScore(userObj, res, function(topScore) {
-                    res.forEach(function (entry, i) {
-                        if(entry.beatmap_id === topScore[0].beatmap_id || i === res.length) {
-                            console.log(topScore)
-                            callback(topScore, i, res);
-                        }
-                    });
+                scoreManagement.getNewScore(userObj, res, function(topScore, index) {
+                    if(topScore.length !== 0) {
+                        res.forEach(function (entry, i) {
+                            if(entry.beatmap_id === topScore[0].beatmap_id) {
+                                console.log(topScore[0])
+                                callback(topScore[0], i, res);
+                            }
+                        });
+                    } else {
+                        callback(topScore[0], 0, res);
+                    }
                 });
             }
         });
     }
 
-    module.exports.getNewScore = function (userObj, res, callback) {
+    /*module.exports.getNewScore = function (userObj, res, callback) {
         var topScore = _.differenceWith(userObj.topScores, res, function (o1, o2) {
-            console.log(o2);
-            console.log("+++++++++++++++++++++++++++++++++++++")
-            console.log(o1);
-            console.log("-------------------------------------------------------");
             return o2['pp'] === o1['pp']
         });
-        if(topScore.length > 0){
+        if(topScore.length > 0 || ){
+            console.log("going further");
             callback(topScore);
         }
+    }*/
+
+    module.exports.getNewScore = function (userObj, res, callback) {
+        res.forEach(function (entry, i) {
+            userObj.topScores.forEach(function (scoresEntry, j) {
+                if (i === j && (scoresEntry.date !== entry.date)) {
+                    callback(entry, i);
+                } else if (i === res.length-1 && j === scoresEntry.length-1) {
+                    callback('undefined', -1);
+                }
+            });
+        });
     }
 
     module.exports.updateTopScores = function (newTopScores) {
