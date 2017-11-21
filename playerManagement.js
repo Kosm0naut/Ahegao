@@ -223,6 +223,7 @@
                             if (score !== undefined) {
                                 console.log("1");
                                 console.log(score);
+                                console.log(index);
                                 messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
                                     scoreManagement.updateTopScores(topScores)
                                         .then(function (topScoreArr) {
