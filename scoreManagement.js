@@ -89,15 +89,10 @@
             } else {
                 console.log("here");
                 scoreManagement.getNewScore(userObj, res, function(topScore, index) {
-                    if(topScore.length !== 0) {
-                        res.forEach(function (entry, i) {
-                            if(entry.beatmap_id === topScore[0].beatmap_id) {
-                                console.log(topScore[0])
-                                callback(topScore[0], i, res);
-                            }
-                        });
+                    if(index > 0) {
+                        callback(topScore, index, res);
                     } else {
-                        callback(topScore[0], 0, res);
+                        callback('undefined', index, res);
                     }
                 });
             }
