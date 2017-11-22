@@ -212,6 +212,7 @@
                 console.log("Error retrieving user object " + err);
             } else if (obj) {
                 if (calculations.checkForChanges(userObj.pp, obj.pp_raw) !== 0) {
+                    console.log("PP Changes for " + userObj.name);
                     playerManagement.calculatePPChanges(userObj, obj, function (accuracyChange, total){
                         scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                             if (score !== undefined) {
