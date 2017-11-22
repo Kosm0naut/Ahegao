@@ -256,11 +256,11 @@
 
     module.exports.calculatePPChanges = function (userObj, obj, callback) {
         var total = {
-            ppGained: 0,
-            rank: 0
+            ppGained: parseFloat(userObj.totalpp),
+            rank: userObj.totalrank
         }, accuracyChange;
-        total.ppGained = parseFloat(userObj.totalpp);
-        total.rank = userObj.totalrank;
+        //total.ppGained = parseFloat(userObj.totalpp);
+        //total.rank = userObj.totalrank;
         
         accuracyChange = calculations.getAccuracyChange(userObj.accuracy, obj.accuracy).toFixed(2);
         total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
