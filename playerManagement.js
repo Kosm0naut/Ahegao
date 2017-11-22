@@ -266,7 +266,7 @@
         total.ppGained += parseFloat(calculations.checkForChanges(userObj.pp, obj.pp_raw).toFixed(2));
         total.rank += calculations.checkForChanges(obj.pp_rank, userObj.rank);
 
-        if(accuracyChange && total.ppGained && total.rank) {
+        if(total.ppGained) {
             callback(accuracyChange, total);
         }
     };
