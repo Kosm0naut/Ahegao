@@ -216,11 +216,16 @@
                     playerManagement.calculatePPChanges(userObj, obj, function (accuracyChange, total){
                         scoreManagement.checkTopScores(userObj, osu, function (score, index, topScores) {
                             if (score !== undefined) {
+                                console.log("1.")
                                 messageManagement.printTopScoresUpdate(mybot, osu, db, userObj, score, index, function () {
+                                    console.log("2.")
                                     scoreManagement.updateTopScores(topScores)
                                         .then(function (topScoreArr) {
+                                            console.log("3.");
                                             scoreManagement.pushTopScores(userObj, topScoreArr, db, function () {
+                                                console.log("4.");
                                                 messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                                    console.log("5.");
                                                     playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                                         .then(function () {
                                                             callback();
@@ -231,8 +236,10 @@
                                 });
                             } else {
                                 messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
+                                    console.log("1/");
                                     playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                         .then(function (response) {
+                                            console.log("2");
                                             callback();
                                         }, function (err) {
                                         console.log("Error playerManagement.js line 241: " + err);
