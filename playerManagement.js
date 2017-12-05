@@ -77,7 +77,8 @@
     };
 
     module.exports.regExpEscape = function (literal_string) {
-        return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
+        //return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
+        return literal_string.replace(/^[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
     module.exports.updatePlayerStats = function (dbObj, apiObj, totalPp, totalRank, db) {
@@ -237,10 +238,8 @@
                                 });
                             } else {
                                 messageManagement.printUpdateMessage(mybot, userObj, obj, accuracyChange, total, db, function () {
-                                    console.log("1/");
                                     playerManagement.updatePlayerStats(userObj, obj, total.ppGained, total.rank, db)
                                         .then(function (response) {
-                                            console.log("2");
                                             callback();
                                         }, function (err) {
                                         console.log("Error playerManagement.js line 241: " + err);
