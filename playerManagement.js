@@ -67,7 +67,7 @@
     };
 
     module.exports.findPlayerName = function (userName, db, callback) {
-        db.collection('user').find({"name": { $regex : new RegExp(playerManagement.regExpEscape(userName), "i") }}).toArray(function (err, items) {
+        db.collection('user').find({"name": { $regex : new RegExp("^" + playerManagement.regExpEscape(userName) + "$", "i") }}).toArray(function (err, items) {
             if (err) {
                 console.log("Error getting the server from the database. " + err);
             } else {
@@ -78,7 +78,7 @@
 
     module.exports.regExpEscape = function (literal_string) {
         //return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
-        return literal_string.replace('\b[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g', '\\$&\b');
+        return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
     module.exports.updatePlayerStats = function (dbObj, apiObj, totalPp, totalRank, db) {
