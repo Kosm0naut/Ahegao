@@ -136,7 +136,7 @@
                     }
                 }
                 if (i === res[0].serverId.length && found === false) {
-                    db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $push: { "serverId": serverId } }, function (err, result) {
+                    db.collection('user').update({"name": { $regex : new RegExp("^" + playerManagement.regExpEscape(playerName) + "$", "i") }}, { $push: { "serverId": serverId } }, function (err, result) {
                         if (err) {
                             console.log("Error adding server to the user obj. " + err);
                         } else if (result) {
