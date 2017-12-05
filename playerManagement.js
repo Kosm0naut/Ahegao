@@ -281,7 +281,7 @@
                         }
                     }
                     if (i === res[0].trackedBy.length && found === false) {
-                        db.collection('user').update({"name": { $regex : new RegExp(playerManagement.regExpEscape(playerName), "i") }}, { $push: { "trackedBy": serverId } }, function (err, result) {
+                        db.collection('user').update({"name": { $regex : new RegExp("^" + playerManagement.regExpEscape(playerName) + "$", "i") }}, { $push: { "trackedBy": serverId } }, function (err, result) {
                             if (err) {
                                 console.log(err);
                             } else if (result) {
