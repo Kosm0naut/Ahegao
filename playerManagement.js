@@ -78,7 +78,7 @@
 
     module.exports.regExpEscape = function (literal_string) {
         //return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
-        return literal_string.replace(/\b[-[\]{}()*+!<=:?.\/\\^$|#\s,]\b/g, '\\$&');
+        return literal_string.replace('\b[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g', '\\$&\b');
     }
 
     module.exports.updatePlayerStats = function (dbObj, apiObj, totalPp, totalRank, db) {
